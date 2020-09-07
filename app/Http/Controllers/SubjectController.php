@@ -6,6 +6,8 @@ use App\Subject;
 use App\Teacher;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Str;
+
 class SubjectController extends Controller
 {
     /**
@@ -49,7 +51,7 @@ class SubjectController extends Controller
 
         Subject::create([
             'name'          => $request->name,
-            'slug'          => str_slug($request->name),
+            'slug'          => Str::slug($request->name),
             'subject_code'  => $request->subject_code,
             'teacher_id'    => $request->teacher_id,
             'description'   => $request->description
@@ -100,7 +102,7 @@ class SubjectController extends Controller
 
         $subject->update([
             'name'          => $request->name,
-            'slug'          => str_slug($request->name),
+            'slug'          => Str::slug($request->name),
             'subject_code'  => $request->subject_code,
             'teacher_id'    => $request->teacher_id,
             'description'   => $request->description

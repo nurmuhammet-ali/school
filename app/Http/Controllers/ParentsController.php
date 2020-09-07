@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Parents;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ParentsController extends Controller
 {
@@ -56,7 +58,7 @@ class ParentsController extends Controller
         ]);
         
         if ($request->hasFile('profile_picture')) {
-            $profile = str_slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
+            $profile = Str::slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
             $request->profile_picture->move(public_path('images/profile'), $profile);
         } else {
             $profile = 'avatar.png';
@@ -122,7 +124,7 @@ class ParentsController extends Controller
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            $profile = str_slug($parents->user->name).'-'.$parents->user->id.'.'.$request->profile_picture->getClientOriginalExtension();
+            $profile = Str::slug($parents->user->name).'-'.$parents->user->id.'.'.$request->profile_picture->getClientOriginalExtension();
             $request->profile_picture->move(public_path('images/profile'), $profile);
         } else {
             $profile = $parents->user->profile_picture;

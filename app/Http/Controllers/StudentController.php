@@ -8,6 +8,7 @@ use App\Parents;
 use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
@@ -65,7 +66,7 @@ class StudentController extends Controller
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            $profile = str_slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
+            $profile = Str::slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
             $request->profile_picture->move(public_path('images/profile'), $profile);
         } else {
             $profile = 'avatar.png';
@@ -140,7 +141,7 @@ class StudentController extends Controller
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            $profile = str_slug($student->user->name).'-'.$student->user->id.'.'.$request->profile_picture->getClientOriginalExtension();
+            $profile = Str::slug($student->user->name).'-'.$student->user->id.'.'.$request->profile_picture->getClientOriginalExtension();
             $request->profile_picture->move(public_path('images/profile'), $profile);
         } else {
             $profile = $student->user->profile_picture;

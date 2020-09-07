@@ -6,6 +6,7 @@ use App\User;
 use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class TeacherController extends Controller
 {
@@ -57,7 +58,7 @@ class TeacherController extends Controller
         ]);
         
         if ($request->hasFile('profile_picture')) {
-            $profile = str_slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
+            $profile = Str::slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
             $request->profile_picture->move(public_path('images/profile'), $profile);
         } else {
             $profile = 'avatar.png';
@@ -125,7 +126,7 @@ class TeacherController extends Controller
         $user = User::findOrFail($teacher->user_id);
 
         if ($request->hasFile('profile_picture')) {
-            $profile = str_slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
+            $profile = Str::slug($user->name).'-'.$user->id.'.'.$request->profile_picture->getClientOriginalExtension();
             $request->profile_picture->move(public_path('images/profile'), $profile);
         } else {
             $profile = $user->profile_picture;
@@ -157,7 +158,9 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $user = User::findOrFail($teacher->user_id);
+
         $user->teacher()->delete();
+        
         $user->removeRole('Teacher');
 
         if ($user->delete()) {
