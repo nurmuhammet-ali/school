@@ -15,9 +15,9 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('parent_id');
-            $table->unsignedBigInteger('class_id');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('parent_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('class_id')->constrained('grades')->cascadeOnDelete();
             $table->unsignedBigInteger('roll_number');
             $table->enum('gender', ['male', 'female']);
             $table->string('phone');

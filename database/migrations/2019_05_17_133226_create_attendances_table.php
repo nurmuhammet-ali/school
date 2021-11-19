@@ -15,9 +15,9 @@ class CreateAttendancesTable extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('class_id');
-            $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('student_id');
+            $table->foreignId('class_id')->constrained('grades')->cascadeOnDelete();
+            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->date('attendence_date');
             $table->boolean('attendence_status');
             $table->timestamps();

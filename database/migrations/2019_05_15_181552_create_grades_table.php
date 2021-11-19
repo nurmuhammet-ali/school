@@ -15,7 +15,7 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('teacher_id');
+            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('class_numeric');
             $table->string('class_name');
             $table->string('class_description');

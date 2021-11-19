@@ -18,7 +18,7 @@ class CreateSubjectsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->unsignedBigInteger('subject_code');
-            $table->unsignedBigInteger('teacher_id');
+            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();
             $table->text('description');
             $table->timestamps();
         });

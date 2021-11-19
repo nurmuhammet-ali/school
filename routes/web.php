@@ -11,11 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('/login');
-});
-
 Auth::routes();
+Route::get('/', fn () => redirect('/login'));
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'HomeController@profile')->name('profile');
@@ -24,8 +21,7 @@ Route::put('/profile/update', 'HomeController@profileUpdate')->name('profile.upd
 Route::get('/profile/changepassword', 'HomeController@changePasswordForm')->name('profile.change.password');
 Route::post('/profile/changepassword', 'HomeController@changePassword')->name('profile.changepassword');
 
-Route::group(['middleware' => ['auth','role:Admin']], function () 
-{
+Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::get('/roles-permissions', 'RolePermissionController@roles')->name('roles-permissions');
     Route::get('/role-create', 'RolePermissionController@createRole')->name('role.create');
     Route::post('/role-store', 'RolePermissionController@storeRole')->name('role.store');
@@ -46,20 +42,17 @@ Route::group(['middleware' => ['auth','role:Admin']], function ()
     Route::resource('teacher', 'TeacherController');
     Route::resource('parents', 'ParentsController');
     Route::resource('student', 'StudentController');
+    Route::resource('diaries', 'DiaryController');
     Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
-
 });
 
-Route::group(['middleware' => ['auth','role:Teacher']], function () 
-{
+Route::group(['middleware' => ['auth','role:Teacher']], function () {
     Route::post('attendance', 'AttendanceController@store')->name('teacher.attendance.store');
     Route::get('attendance-create/{classid}', 'AttendanceController@createByTeacher')->name('teacher.attendance.create');
 });
 
-Route::group(['middleware' => ['auth','role:Parent']], function () 
-{
-    Route::get('attendance/{attendance}', 'AttendanceController@show')->name('attendance.show');
-});
+Route::group(['middleware' => ['auth','role:Parent']], 
+    fn () => Route::get('attendance/{attendance}', 'AttendanceController@show')->name('attendance.show'));
 
 Route::group(['middleware' => ['auth','role:Student']], function () {
 

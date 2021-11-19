@@ -15,8 +15,8 @@ class CreateGradeSubjectTable extends Migration
     {
         Schema::create('grade_subject', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('grade_id');
-            $table->unsignedBigInteger('subject_id');
+            $table->foreignId('grade_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
             $table->timestamps();
         });
     }
