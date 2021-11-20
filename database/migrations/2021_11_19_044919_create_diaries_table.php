@@ -17,7 +17,6 @@ class CreateDiariesTable extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('day_id')->constrained()->cascadeOnDelete();
-            
             $table->timestamps();
         });
     }

@@ -132,12 +132,16 @@ class GradeController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function assignSubject($classid)
+    public function assignSubject($id)
     {
         $subjects   = Subject::latest()->get();
-        $assigned   = Grade::with(['subjects','students'])->findOrFail($classid);
+        $assigned   = Grade::with(['subjects','students'])->findOrFail($id);
 
-        return view('backend.classes.assign-subject', compact('classid','subjects','assigned'));
+        return view('backend.classes.assign-subject', [
+            'classid' => $id,
+            'subjects' => $subjects,
+            'assigned' => $assigned
+        ]);
     }
 
     /*

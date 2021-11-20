@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Day;
+use App\Diary;
 use Illuminate\Http\Request;
 
 class DiaryController extends Controller
@@ -13,7 +15,9 @@ class DiaryController extends Controller
      */
     public function index()
     {
-        return view('backend.diary.create');
+        return view('backend.diary.index', [
+            'days' => Day::all()
+        ]);
     }
 
     /**
@@ -23,7 +27,7 @@ class DiaryController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.diary.create');
     }
 
     /**
