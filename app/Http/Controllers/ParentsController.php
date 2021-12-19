@@ -45,10 +45,7 @@ class ParentsController extends Controller
             'name'              => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
-            'gender'            => 'required|string|max:255',
             'phone'             => 'required|string|max:255',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
         ]);
 
         $user = User::create([
@@ -68,13 +65,10 @@ class ParentsController extends Controller
         ]);
 
         $user->parent()->create([
-            'gender'            => $request->gender,
             'phone'             => $request->phone,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
         ]);
 
-        $user->assignRole('Parent');
+        $user->assignRole('ene_ata');
 
         return redirect()->route('parents.index');
     }
@@ -117,10 +111,7 @@ class ParentsController extends Controller
         $request->validate([
             'name'              => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users,email,'.$parents->user_id,
-            'gender'            => 'required|string',
             'phone'             => 'required|string|max:255',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
         ]);
 
         if ($request->hasFile('profile_picture')) {
@@ -137,10 +128,7 @@ class ParentsController extends Controller
         ]);
 
         $parents->update([
-            'gender'            => $request->gender,
             'phone'             => $request->phone,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
         ]);
 
         return redirect()->route('parents.index');
@@ -157,7 +145,7 @@ class ParentsController extends Controller
         $parent = Parents::findOrFail($id);
 
         $user = User::findOrFail($parent->user_id);
-        $user->removeRole('Parent');
+        $user->removeRole('ene_ata');
 
         if ($user->delete()) {
             if($user->profile_picture != 'avatar.png') {

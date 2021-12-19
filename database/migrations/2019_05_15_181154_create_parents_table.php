@@ -16,10 +16,10 @@ class CreateParentsTable extends Migration
         Schema::create('parents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->enum('gender', ['male', 'female']);
-            $table->string('phone');
-            $table->string('current_address');
-            $table->string('permanent_address');
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->string('phone')->nullable();
+            $table->string('current_address')->nullable();
+            $table->string('permanent_address')->nullable();
             $table->timestamps();
         });
     }

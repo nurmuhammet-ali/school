@@ -38,13 +38,17 @@ Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::get('assign-subject-to-class/{id}', 'GradeController@assignSubject')->name('class.assign.subject');
     Route::post('assign-subject-to-class/{id}', 'GradeController@storeAssignedSubject')->name('store.class.assign.subject');
 
+    Route::get('timetable', 'TimetableController@index')->name('timetables.index');
+    Route::get('timetable/{grade}/grade', 'TimetableController@grade')->name('timetable.grade');
+    Route::get('timetable/{grade}/grade/show', 'TimetableController@grade_show')->name('timetable.grade.show');
+    Route::post('timetable/{grade}/grade', 'TimetableController@grade_store')->name('timetable.grade.update');
+
     Route::resource('assignrole', 'RoleAssign');
     Route::resource('classes', 'GradeController');
     Route::resource('subject', 'SubjectController');
     Route::resource('teacher', 'TeacherController');
     Route::resource('parents', 'ParentsController');
     Route::resource('student', 'StudentController');
-    Route::resource('diaries', 'DiaryController');
     Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
 });
 

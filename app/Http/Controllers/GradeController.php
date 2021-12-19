@@ -16,7 +16,7 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $classes = Grade::withCount('students')->latest()->paginate(10);
+        $classes = Grade::withCount('students')->with(['teacher', 'subjects'])->latest()->paginate(15);
 
         return view('backend.classes.index', compact('classes'));
     }
@@ -45,7 +45,7 @@ class GradeController extends Controller
             'class_name'        => 'required|string|max:255|unique:grades',
             'class_numeric'     => 'required|numeric',
             'teacher_id'        => 'required|numeric',
-            'class_description' => 'required|string|max:255'
+            'class_description' => 'nullable|string|max:255'
         ]);
 
         Grade::create([

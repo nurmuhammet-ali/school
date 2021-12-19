@@ -9,7 +9,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+    <script>
+        window.Lara = {};
+    </script>
+    @yield('head_javascript')
 </head>
 <body class="bg-gray-100 font-sans antialiased">
     <div id="app">
@@ -30,6 +33,7 @@
         </div>
     </div>
 
+    @include('backend.modals.info')
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script>
@@ -41,6 +45,12 @@
     </script>
 
     @stack('scripts')
+
+    @if(session()->has('message'))
+        <script>
+            alert('{{ session('message') }}');
+        </script>
+    @endif
 
 </body>
 </html>

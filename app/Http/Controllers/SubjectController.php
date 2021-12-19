@@ -18,7 +18,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::with('teacher')->latest()->paginate(10);
-        
+
         return view('backend.subjects.index', compact('subjects'));
     }
 
@@ -29,9 +29,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        $teachers = Teacher::latest()->get();
-
-        return view('backend.subjects.create', compact('teachers'));
+        return view('backend.subjects.create');
     }
 
     /**
@@ -44,16 +42,13 @@ class SubjectController extends Controller
     {
         $request->validate([
             'name'          => 'required|string|max:255|unique:subjects',
-            'subject_code'  => 'required|numeric',
-            'teacher_id'    => 'required|numeric',
-            'description'   => 'required|string|max:255'
+            'description'   => 'nullable|string|max:255'
         ]);
 
         Subject::create([
             'name'          => $request->name,
             'slug'          => Str::slug($request->name),
-            'subject_code'  => $request->subject_code,
-            'teacher_id'    => $request->teacher_id,
+            'subject_code'  => rand(100, 1000),
             'description'   => $request->description
         ]);
 
@@ -79,9 +74,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        $teachers = Teacher::latest()->get();
-
-        return view('backend.subjects.edit', compact('subject','teachers'));
+        return view('backend.subjects.edit', compact('subject'));
     }
 
     /**
@@ -95,16 +88,12 @@ class SubjectController extends Controller
     {
         $request->validate([
             'name'          => 'required|string|max:255|unique:subjects,name,'.$subject->id,
-            'subject_code'  => 'required|numeric',
-            'teacher_id'    => 'required|numeric',
-            'description'   => 'required|string|max:255'
+            'description'   => 'nullable|string|max:255'
         ]);
 
         $subject->update([
             'name'          => $request->name,
             'slug'          => Str::slug($request->name),
-            'subject_code'  => $request->subject_code,
-            'teacher_id'    => $request->teacher_id,
             'description'   => $request->description
         ]);
 

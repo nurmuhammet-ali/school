@@ -44,11 +44,7 @@ class TeacherController extends Controller
             'name'              => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
-            'gender'            => 'required|string',
-            'phone'             => 'required|string|max:255',
-            'dateofbirth'       => 'required|date',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
+            'phone'             => 'required|string|max:255'
         ]);
 
         $user = User::create([
@@ -68,14 +64,10 @@ class TeacherController extends Controller
         ]);
 
         $user->teacher()->create([
-            'gender'            => $request->gender,
-            'phone'             => $request->phone,
-            'dateofbirth'       => $request->dateofbirth,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
+            'phone' => $request->phone,
         ]);
 
-        $user->assignRole('Teacher');
+        $user->assignRole('mugallym');
 
         return redirect()->route('teacher.index');
     }
@@ -116,11 +108,7 @@ class TeacherController extends Controller
         $request->validate([
             'name'              => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users,email,'.$teacher->user_id,
-            'gender'            => 'required|string',
             'phone'             => 'required|string|max:255',
-            'dateofbirth'       => 'required|date',
-            'current_address'   => 'required|string|max:255',
-            'permanent_address' => 'required|string|max:255'
         ]);
 
         $user = User::findOrFail($teacher->user_id);
@@ -139,11 +127,7 @@ class TeacherController extends Controller
         ]);
 
         $user->teacher()->update([
-            'gender'            => $request->gender,
             'phone'             => $request->phone,
-            'dateofbirth'       => $request->dateofbirth,
-            'current_address'   => $request->current_address,
-            'permanent_address' => $request->permanent_address
         ]);
 
         return redirect()->route('teacher.index');
@@ -161,7 +145,7 @@ class TeacherController extends Controller
 
         $user->teacher()->delete();
         
-        $user->removeRole('Teacher');
+        $user->removeRole('mugallym');
 
         if ($user->delete()) {
             if($user->profile_picture != 'avatar.png') {

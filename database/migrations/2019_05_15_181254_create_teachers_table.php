@@ -16,11 +16,11 @@ class CreateTeachersTable extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->enum('gender', ['male', 'female']);
-            $table->string('phone');
-            $table->date('dateofbirth');
-            $table->string('current_address');
-            $table->string('permanent_address');
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->string('phone')->nullable();
+            $table->date('dateofbirth')->nullable();
+            $table->string('current_address')->nullable();
+            $table->string('permanent_address')->nullable();
             $table->timestamps();
         });
     }

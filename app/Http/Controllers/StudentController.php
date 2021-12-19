@@ -52,13 +52,6 @@ class StudentController extends Controller
             'password'          => 'required|string|min:8',
             'parent_id'         => 'required|numeric',
             'class_id'          => 'required|numeric',
-            'roll_number'       => [
-                'required',
-                'numeric',
-                Rule::unique('students')->where(function ($query) use ($request) {
-                    return $query->where('class_id', $request->class_id);
-                })
-            ],
             'gender'            => 'required|string',
             'phone'             => 'required|string|max:255',
             'dateofbirth'       => 'required|date',
@@ -85,7 +78,7 @@ class StudentController extends Controller
         $user->student()->create([
             'parent_id'         => $request->parent_id,
             'class_id'          => $request->class_id,
-            'roll_number'       => $request->roll_number,
+            'roll_number'       => rand(2000, 6000),
             'gender'            => $request->gender,
             'phone'             => $request->phone,
             'dateofbirth'       => $request->dateofbirth,
@@ -93,7 +86,7 @@ class StudentController extends Controller
             'permanent_address' => $request->permanent_address
         ]);
 
-        $user->assignRole('Student');
+        $user->assignRole('okuwcy');
 
         return redirect()->route('student.index');
     }
@@ -139,13 +132,6 @@ class StudentController extends Controller
             'email'             => 'required|string|email|max:255|unique:users,email,'.$student->user_id,
             'parent_id'         => 'required|numeric',
             'class_id'          => 'required|numeric',
-            'roll_number'       => [
-                'required',
-                'numeric',
-                Rule::unique('students')->ignore($student->id)->where(function ($query) use ($request) {
-                    return $query->where('class_id', $request->class_id);
-                })
-            ],
             'gender'            => 'required|string',
             'phone'             => 'required|string|max:255',
             'dateofbirth'       => 'required|date',
@@ -169,7 +155,6 @@ class StudentController extends Controller
         $student->update([
             'parent_id'         => $request->parent_id,
             'class_id'          => $request->class_id,
-            'roll_number'       => $request->roll_number,
             'gender'            => $request->gender,
             'phone'             => $request->phone,
             'dateofbirth'       => $request->dateofbirth,
@@ -190,7 +175,7 @@ class StudentController extends Controller
     {
         $user = User::findOrFail($student->user_id);
         $user->student()->delete();
-        $user->removeRole('Student');
+        $user->removeRole('okuwcy');
 
         if ($user->delete()) {
             if($user->profile_picture != 'avatar.png') {

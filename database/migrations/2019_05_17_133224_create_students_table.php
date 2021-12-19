@@ -18,12 +18,12 @@ class CreateStudentsTable extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('parent_id')->constrained()->cascadeOnDelete();
             $table->foreignId('class_id')->constrained('grades')->cascadeOnDelete();
-            $table->unsignedBigInteger('roll_number');
-            $table->enum('gender', ['male', 'female']);
-            $table->string('phone');
-            $table->date('dateofbirth');
-            $table->string('current_address');
-            $table->string('permanent_address');
+            $table->unsignedBigInteger('roll_number')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->string('phone')->nullable();
+            $table->date('dateofbirth')->nullable();
+            $table->string('current_address')->nullable();
+            $table->string('permanent_address')->nullable();
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Name : 
+                        Ady : 
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -24,7 +24,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Roll Number :
+                        Klas nomeri :
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -34,7 +34,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Phone :
+                        Telefon belgi :
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -44,7 +44,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Gender :
+                        Jynsy :
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -54,7 +54,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Date of Birth :
+                        Doglan senesi :
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -64,7 +64,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Current Address :
+                        Ýaşaýan salgysy :
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -74,7 +74,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Permanent Address :
+                        Ýazga duran senesi :
                     </label>
                 </div>
                 <div class="md:w-2/3">
@@ -84,7 +84,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Class :
+                        Klas :
                     </label>
                 </div>
                 <div class="md:w-2/3 block text-gray-600 font-bold">
@@ -94,7 +94,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Student Parent :
+                        Ene-atasy :
                     </label>
                 </div>
                 <div class="md:w-2/3 block text-gray-600 font-bold">
@@ -104,7 +104,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Parent Email :
+                        Ene atasynyň email salgysy :
                     </label>
                 </div>
                 <div class="md:w-2/3 block text-gray-600 font-bold">
@@ -114,7 +114,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Parent Phone :
+                        Ene atasynyň telefon belgisi :
                     </label>
                 </div>
                 <div class="md:w-2/3 block text-gray-600 font-bold">
@@ -124,7 +124,7 @@
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Parent Address :
+                        Ene atasynyň öý salgysy :
                     </label>
                 </div>
                 <div class="md:w-2/3 block text-gray-600 font-bold">
@@ -134,9 +134,9 @@
 
             <div class="w-full px-0 md:px-6 py-12">
                 <div class="flex items-center bg-gray-200">
-                    <div class="w-1/3 text-left text-gray-600 py-2 px-4 font-semibold">Code</div>
-                    <div class="w-1/3 text-left text-gray-600 py-2 px-4 font-semibold">Subject</div>
-                    <div class="w-1/3 text-right text-gray-600 py-2 px-4 font-semibold">Teacher</div>
+                    <div class="w-1/3 text-left text-gray-600 py-2 px-4 font-semibold">Belgisi</div>
+                    <div class="w-1/3 text-left text-gray-600 py-2 px-4 font-semibold">OKuw dersi</div>
+                    <div class="w-1/3 text-right text-gray-600 py-2 px-4 font-semibold">Mugallym</div>
                 </div>
                 @foreach ($student->class->subjects as $subject)
                     <div class="flex items-center justify-between border border-gray-200 -mb-px">
@@ -149,10 +149,10 @@
 
             <div class="w-full px-0 md:px-6 py-12">
                 <div class="flex items-center bg-gray-200">
-                    <div class="w-1/4 text-left text-gray-600 py-2 px-4 font-semibold">Date</div>
-                    <div class="w-1/4 text-left text-gray-600 py-2 px-4 font-semibold">Class</div>
-                    <div class="w-1/4 text-left text-gray-600 py-2 px-4 font-semibold">Teacher</div>
-                    <div class="w-1/4 text-right text-gray-600 py-2 px-4 font-semibold">attendance</div>
+                    <div class="w-1/4 text-left text-gray-600 py-2 px-4 font-semibold">Sene</div>
+                    <div class="w-1/4 text-left text-gray-600 py-2 px-4 font-semibold">Klas</div>
+                    <div class="w-1/4 text-left text-gray-600 py-2 px-4 font-semibold">Mugallym</div>
+                    <div class="w-1/4 text-right text-gray-600 py-2 px-4 font-semibold">Gatnaşyk</div>
                 </div>
                 @foreach ($student->attendances as $attendance)
                     <div class="flex items-center justify-between border border-gray-200 -mb-px">

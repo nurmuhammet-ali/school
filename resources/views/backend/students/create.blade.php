@@ -5,7 +5,7 @@
 
         <div class="flex items-center justify-between mb-6">
             <div>
-                <h2 class="text-gray-700 uppercase font-bold">Create Student</h2>
+                <h2 class="text-gray-700 uppercase font-bold">Okuwçy goş</h2>
             </div>
             <div class="flex flex-wrap items-center">
                 <a href="{{ route('student.index') }}" class="bg-gray-200 text-gray-700 text-sm uppercase py-2 px-4 flex items-center rounded">
@@ -21,11 +21,11 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Name
+                            Ady
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="name" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('name') }}">
+                        <input name="name" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('name') }}" required>
                         @error('name')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
@@ -38,7 +38,7 @@
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="email" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="email" value="{{ old('email') }}">
+                        <input name="email" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="email" value="{{ old('email') }}" required>
                         @error('email')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
@@ -47,11 +47,11 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Password
+                            Açar sözi
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="password" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="password">
+                        <input name="password" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="password" required>
                         @error('password')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
@@ -60,20 +60,7 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Roll Number
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input name="roll_number" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="number" value="{{ old('roll_number') }}">
-                        @error('roll_number')
-                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Phone
+                            Telefon belgisi
                         </label>
                     </div>
                     <div class="md:w-2/3">
@@ -86,22 +73,18 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Gender
+                            Jynsy
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <div class="flex flex-row items-center">
                             <label class="block text-gray-500 font-bold">
                                 <input name="gender" class="mr-2 leading-tight" type="radio" value="male">
-                                <span class="text-sm">Male</span>
+                                <span class="text-sm">Erkek</span>
                             </label>
                             <label class="ml-4 block text-gray-500 font-bold">
                                 <input name="gender" class="mr-2 leading-tight" type="radio" value="female">
-                                <span class="text-sm">Female</span>
-                            </label>
-                            <label class="ml-4 block text-gray-500 font-bold">
-                                <input name="gender" class="mr-2 leading-tight" type="radio" value="other">
-                                <span class="text-sm">Other</span>
+                                <span class="text-sm">Gyz</span>
                             </label>
                         </div>
                         @error('gender')
@@ -112,11 +95,11 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Date of Birth
+                            Doglan senesi
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="dateofbirth" id="datepicker-sc" autocomplete="off" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('dateofbirth') }}">
+                        <input name="dateofbirth" id="datepicker-sc" autocomplete="off" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('dateofbirth') }}" required>
                         @error('dateofbirth')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
@@ -125,11 +108,11 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Current Address
+                            Ýaşaýan ýeri
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="current_address" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('current_address') }}">
+                        <input name="current_address" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('current_address') }}" required>
                         @error('current_address')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
@@ -138,11 +121,11 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Permanent Address
+                            Hemişelik salgyda duran ýeri
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="permanent_address" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('permanent_address') }}">
+                        <input name="permanent_address" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="{{ old('permanent_address') }}" required>
                         @error('permanent_address')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
@@ -151,13 +134,13 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Assign Class
+                            Synpy
                         </label>
                     </div>
                     <div class="md:w-2/3 block text-gray-600 font-bold">
                         <div class="relative">
-                            <select name="class_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                <option value="">--Select Class--</option>
+                            <select name="class_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+                                <option value="">--Synp saýla--</option>
                                 @foreach ($classes as $class)
                                     <option value="{{ $class->id }}">{{ $class->class_name }}</option>
                                 @endforeach
@@ -171,13 +154,13 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Student Parent
+                            Hossary
                         </label>
                     </div>
                     <div class="md:w-2/3 block text-gray-600 font-bold">
                         <div class="relative">
-                            <select name="parent_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                <option value="">--Select Parent--</option>
+                            <select name="parent_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+                                <option value="">--Hossaryny saýla--</option>
                                 @foreach ($parents as $parent)
                                     <option value="{{ $parent->id }}">{{ $parent->user->name }}</option>
                                 @endforeach
@@ -191,7 +174,7 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Picture :
+                            Surat :
                         </label>
                     </div>
                     <div class="md:w-2/3">
