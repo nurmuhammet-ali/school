@@ -18,31 +18,31 @@ class UsersTableSeeder extends Seeder
     {
         $user = User::create([
             'name'          => 'Admin',
-            'email'         => 'admin@demo.com',
+            'email'         => 'admin@admin.com',
             'password'      => bcrypt('12345678'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user->assignRole('Admin');
 
         $user2 = User::create([
-            'name'          => 'Nurmuhammet mugallym',
-            'email'         => 'mugallym@demo.com',
+            'name'          => 'Mugallym',
+            'email'         => 'mugallym@admin.com',
             'password'      => bcrypt('12345678'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user2->assignRole('mugallym');
 
         $user3 = User::create([
-            'name'          => 'Nurmuhammet ene-ata',
-            'email'         => 'ene-ata@demo.com',
+            'name'          => 'Ene-ata',
+            'email'         => 'ene-ata@admin.com',
             'password'      => bcrypt('12345678'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
         $user3->assignRole('ene_ata');
 
         $user4 = User::create([
-            'name'          => 'Nurmuhammet okuwcy',
-            'email'         => 'okuwcy@demo.com',
+            'name'          => 'Okuwcy',
+            'email'         => 'okuwcy@admin.com',
             'password'      => bcrypt('12345678'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);

@@ -18,7 +18,7 @@ class TimetableController extends Controller
     public function index()
     {
         return view('backend.timetables.index', [
-            'grades' => Grade::all()
+            'grades' => Grade::with('teacher')->get()
         ]);
     }
 
@@ -47,14 +47,37 @@ class TimetableController extends Controller
                 ->where('semester', $request->semester)
                 ->where('day', 'monday')->first(['grade_id', 'semester', 'data']);
 
-        // return json_decode($monday_timetable->data);
+        $tuesday_timetable = Timetable::where('grade_id', $grade->id)
+                ->where('semester', $request->semester)
+                ->where('day', 'tuesday')->first(['grade_id', 'semester', 'data']);
+
+        $wednesday_timetable = Timetable::where('grade_id', $grade->id)
+                ->where('semester', $request->semester)
+                ->where('day', 'wednesday')->first(['grade_id', 'semester', 'data']);
+
+        $thursday_timetable = Timetable::where('grade_id', $grade->id)
+                ->where('semester', $request->semester)
+                ->where('day', 'thursday')->first(['grade_id', 'semester', 'data']);
+
+        $friday_timetable = Timetable::where('grade_id', $grade->id)
+                ->where('semester', $request->semester)
+                ->where('day', 'friday')->first(['grade_id', 'semester', 'data']);
+
+        $saturday_timetable = Timetable::where('grade_id', $grade->id)
+                ->where('semester', $request->semester)
+                ->where('day', 'saturday')->first(['grade_id', 'semester', 'data']);
 
         return view('backend.timetables.grade.show', [
             'semester' => $semester,
             'subjects' => $subjects,
             'teachers' => $teachers_for_fronted,
             'grade' => $grade,
-            'monday_timetable' => $monday_timetable
+            'monday_timetable' => $monday_timetable,
+            'tuesday_timetable' => $tuesday_timetable,
+            'wednesday_timetable' => $wednesday_timetable,
+            'thursday_timetable' => $thursday_timetable,
+            'friday_timetable' => $friday_timetable,
+            'saturday_timetable' => $saturday_timetable
         ]);
     }
 
@@ -105,10 +128,5 @@ class TimetableController extends Controller
             'success' => 1,
             'type' => 'new'
         ]);
-    }
-
-    public function almak() 
-    {
-        
     }
 }

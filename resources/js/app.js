@@ -6,18 +6,13 @@
 
 require('./bootstrap');
 
-// import $ from 'jquery';
-// window.$ = window.jQuery = $;
-
 import 'jquery-ui/ui/widgets/datepicker.js';
 
 window.Vue = require('vue');
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
 Vue.component('timetable-day', require('./components/TimetableDay.vue').default);
+Vue.component('diary-day', require('./components/DiaryDay.vue').default);
 
 const app = new Vue({
-    el: '#app',
+    el: '#app'
 });
