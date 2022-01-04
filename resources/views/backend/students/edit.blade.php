@@ -75,11 +75,11 @@
                         <div class="flex flex-row items-center">
                             <label class="block text-gray-500 font-bold">
                                 <input name="gender" class="mr-2 leading-tight" type="radio" value="male" {{ ($student->gender == 'male') ? 'checked' : '' }}>
-                                <span class="text-sm">Male</span>
+                                <span class="text-sm">Erkek</span>
                             </label>
                             <label class="ml-4 block text-gray-500 font-bold">
                                 <input name="gender" class="mr-2 leading-tight" type="radio" value="female" {{ ($student->gender == 'female') ? 'checked' : '' }}>
-                                <span class="text-sm">Female</span>
+                                <span class="text-sm">Zenan</span>
                             </label>
                         </div>
                         @error('gender')
@@ -138,8 +138,7 @@
                                 <option value="">--Synpy saýla--</option>
                                 @foreach ($classes as $class)
                                     <option value="{{ $class->id }}"
-                                        {{ ($class->id === $student->class_id) ? 'selected' : '' }}
-                                    >
+                                        {{ ($class->id === $student->class_id) ? 'selected' : '' }}>
                                         {{ $class->class_name }}
                                     </option>
                                 @endforeach

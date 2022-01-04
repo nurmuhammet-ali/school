@@ -1,7 +1,5 @@
 <?php
 
-use App\Teacher;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +52,8 @@ Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::resource('parents', 'ParentsController');
     Route::resource('student', 'StudentController');
     Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
+
+    Route::get('journals', 'JournalController');
 });
 
 Route::group(['middleware' => ['auth','role:Teacher']], function () {

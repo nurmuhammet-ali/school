@@ -6,11 +6,11 @@
     <form method="POST" action="{{ route('login') }}" class="bg-white shadow rounded px-8 pt-6 pb-8 mb-4">
         @csrf
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="emailaddress">
-                Email salgy
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                Ulanyjy ady
             </label>
-            <input class="shadow appearance-none border @error('password') border-red-500 @enderror rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" id="emailaddress" placeholder="email@example.com">
-            @error('email')
+            <input class="shadow appearance-none border @error('password') border-red-500 @enderror rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" name="username" id="username">
+            @error('username')
                 <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
@@ -36,6 +36,11 @@
                 Gir
             </button>
         </div>
+        @if(count($errors) > 0)
+            @foreach($errors->all() as $error)
+                <p class="text-red">{{ $error }}</p>
+            @endforeach
+        @endif
     </form>
 </div>
 

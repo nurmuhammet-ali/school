@@ -16,7 +16,7 @@
         <div class="mt-8 bg-white rounded border-b-4 border-gray-300">
             <div class="flex flex-wrap items-center uppercase text-sm font-semibold bg-gray-300 text-gray-600 rounded-tl rounded-tr">
                 <div class="w-3/12 px-4 py-3">Ady</div>
-                <div class="w-3/12 px-4 py-3">Email</div>
+                <div class="w-3/12 px-4 py-3">Ulanyjy ady</div>
                 <div class="w-2/12 px-4 py-3">Çagalary</div>
                 <div class="w-2/12 px-4 py-3">Telefon belgisi</div>
                 <div class="w-2/12 px-4 py-3 text-right">Amal</div>
@@ -24,7 +24,7 @@
             @foreach ($parents as $parent)
                 <div class="flex flex-wrap items-center text-gray-700 border-t-2 border-l-4 border-r-4 border-gray-300">
                     <div class="w-3/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">{{ $parent->user->name }}</div>
-                    <div class="w-3/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">{{ $parent->user->email }}</div>
+                    <div class="w-3/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">{{ $parent->user->username }}</div>
                     <div class="w-2/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
                         @foreach ($parent->children as $children)
                             <span class="bg-gray-200 text-xs font-normal px-2 py-px border rounded-full inline-flex my-px">

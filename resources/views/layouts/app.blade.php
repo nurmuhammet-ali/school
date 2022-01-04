@@ -9,6 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/vue-multiselect.min.css">
     <script>
         window.Lara = {};
     </script>
@@ -34,6 +35,7 @@
     </div>
 
     @include('backend.modals.info')
+    <script src="/vue-multiselect.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script>

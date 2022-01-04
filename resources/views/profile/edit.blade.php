@@ -4,7 +4,7 @@
     <div class="profile">
         <div class="sm:flex sm:items-center sm:justify-between mb-6">
             <div>
-                <h2 class="text-gray-700 uppercase font-bold">Profil</h2>
+                <h2 class="text-gray-700 uppercase font-bold">Şahsy otag</h2>
             </div>
             <div class="flex flex-wrap items-center">
                 <a href="{{ route('profile') }}" class="bg-gray-200 text-gray-700 text-sm uppercase py-2 px-4 flex items-center rounded">

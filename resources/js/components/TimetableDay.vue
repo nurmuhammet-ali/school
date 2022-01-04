@@ -1,5 +1,5 @@
 <template>
-    <div class="root-container">
+    <div :class="container_class">
         <br>
         <h2>{{ days[day] }}</h2>
 
@@ -22,19 +22,13 @@
                         </div>
 
                         <div class="w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
-                            <select class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="timetable.teacher[count]" required>
-                                  <option v-for="teacher in teachers" :value="teacher.id">
-                                    {{ teacher.name }}
-                                  </option>
-                            </select>
+                            <vue-multiselect v-model="timetable.teacher[count]" :options="teachers" :close-on-select="true" :preserve-search="true" 
+                                label="name" track-by="name" :preselect-first="true" :show-labels="false" :allow-empty="false" placeholder=""></vue-multiselect>
                         </div>
 
                         <div class="w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
-                            <select class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="timetable.lesson[count]" required>
-                                <option v-for="subject in subjects" :value="subject.id">
-                                    {{ subject.name }}
-                                  </option>
-                            </select>
+                            <vue-multiselect v-model="timetable.lesson[count]" :options="subjects" :close-on-select="true" :preserve-search="true" 
+                                label="name" track-by="name" :preselect-first="true" :show-labels="false" :allow-empty="false" placeholder=""></vue-multiselect>
                         </div>
 
                         <div class="w-2/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
@@ -50,6 +44,7 @@
                     </div>
                 </div>
             </template>
+
             <template v-else>
                 <div v-for="count in lessons_count">
                     <div class="flex flex-wrap items-center text-gray-700 border-t-2 border-l-4 border-r-4 border-gray-300">
@@ -59,19 +54,13 @@
                         </div>
 
                         <div class="w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
-                            <select class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="timetable.teacher[count]" required>
-                                  <option v-for="teacher in teachers" :value="teacher.id">
-                                    {{ teacher.name }}
-                                  </option>
-                            </select>
+                            <vue-multiselect v-model="timetable.teacher[count]" :options="teachers" :close-on-select="true" :preserve-search="true" 
+                                label="name" track-by="name" :preselect-first="true" :show-labels="false" :allow-empty="false" placeholder=""></vue-multiselect>
                         </div>
 
                         <div class="w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
-                            <select class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="timetable.lesson[count]" required>
-                                <option v-for="subject in subjects" :value="subject.id">
-                                    {{ subject.name }}
-                                  </option>
-                            </select>
+                            <vue-multiselect v-model="timetable.lesson[count]" :options="subjects" :close-on-select="true" :preserve-search="true" 
+                                label="name" track-by="name" :preselect-first="true" :show-labels="false" :allow-empty="false" placeholder=""></vue-multiselect>
                         </div>
 
                         <div class="w-2/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight">
@@ -97,6 +86,8 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
+
     export default {
         props: [
             'semester',
@@ -105,6 +96,7 @@
         ],
         data() {
             return {
+                container_class: 'root-container',
                 lessons_count: 1,
                 teachers: window.Lara.teachers,
                 subjects: window.Lara.subjects,
@@ -172,6 +164,12 @@
             },
             updateDay() {
                 if (! this.endpoint || ! this.fieldsAreFilled()) {
+                    Swal.fire({
+                      title: 'Maglumatlary dogry giriziň',
+                      icon: 'error',
+                      confirmButtonText: 'Ýap'
+                    });
+
                     return;
                 }
                 
@@ -197,9 +195,11 @@
                 
                 axios.post(this.endpoint, formData)
                      .then(response => { 
+                        console.log(response);
                         if (response.data.success == 1) {
-                            $('#info-modal-title').text('Üstünlikli ýerine ýetirildi.');
-                            $( "#info-modal" ).toggleClass( "hidden" );
+                            Swal.fire('Üstünlikli ýerine ýetirildi.', '', 'success');
+                            // $('#info-modal-title').text('Üstünlikli ýerine ýetirildi.');
+                            // $( "#info-modal" ).toggleClass( "hidden" );
                         }
                     }).catch(error => {
                         console.log(error);
@@ -207,6 +207,7 @@
             }
         },
         mounted() {
+            this.container_class = 'root-container ' + this.day + '-container';
             if (window.Lara[this.day]) {
                 let data = window.Lara[this.day];
                 this.day_data = {
@@ -217,6 +218,8 @@
 
                 this.setTimetableDatas();
             }
+
+            this.$emit('fuckyou');
         }
     }
 </script>

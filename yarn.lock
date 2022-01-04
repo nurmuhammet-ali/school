@@ -4725,6 +4725,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+nice-select2@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nice-select2/-/nice-select2-2.0.0.tgz#0ed3016a2825f5fa6020dad69b84877c4a8278a4"
+  integrity sha512-VeBynMpjIe0DkGBC5by575YH+m1c7UaMOsByiGUhMBQ3JJa4+loimaHXwFXixk3ItPH7f9JonZ4rf5vsx6IWQw==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
@@ -6646,6 +6651,11 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+sweetalert2@^11.3.3:
+  version "11.3.3"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.3.3.tgz#92ca0408380de8f29180788ce7ed5d5faf799cea"
+  integrity sha512-10Keqbmjng/+XpkpSOQ6dttpztl7XNohjnpC6bX6XFgm0WpRXM81YE0wmonGYOP6uyzd76vpfnZS04PdVvO31Q==
 
 tailwindcss@^1.0.1:
   version "1.9.6"
