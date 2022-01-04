@@ -1,6 +1,50 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"/js/app": 0
+/******/ 	};
+/******/
+/******/
+/******/
+/******/ 	// script path function
+/******/ 	function jsonpScriptSrc(chunkId) {
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".js"
+/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -26,6 +70,67 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var promises = [];
+/******/
+/******/
+/******/ 		// JSONP chunk loading for javascript
+/******/
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
+/******/
+/******/ 			// a Promise means "currently loading".
+/******/ 			if(installedChunkData) {
+/******/ 				promises.push(installedChunkData[2]);
+/******/ 			} else {
+/******/ 				// setup Promise in chunk cache
+/******/ 				var promise = new Promise(function(resolve, reject) {
+/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 				});
+/******/ 				promises.push(installedChunkData[2] = promise);
+/******/
+/******/ 				// start chunk loading
+/******/ 				var script = document.createElement('script');
+/******/ 				var onScriptComplete;
+/******/
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.src = jsonpScriptSrc(chunkId);
+/******/
+/******/ 				// create error before stack unwound to get useful stacktrace later
+/******/ 				var error = new Error();
+/******/ 				onScriptComplete = function (event) {
+/******/ 					// avoid mem leaks in IE.
+/******/ 					script.onerror = script.onload = null;
+/******/ 					clearTimeout(timeout);
+/******/ 					var chunk = installedChunks[chunkId];
+/******/ 					if(chunk !== 0) {
+/******/ 						if(chunk) {
+/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 							var realSrc = event && event.target && event.target.src;
+/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 							error.name = 'ChunkLoadError';
+/******/ 							error.type = errorType;
+/******/ 							error.request = realSrc;
+/******/ 							chunk[1](error);
+/******/ 						}
+/******/ 						installedChunks[chunkId] = undefined;
+/******/ 					}
+/******/ 				};
+/******/ 				var timeout = setTimeout(function(){
+/******/ 					onScriptComplete({ type: 'timeout', target: script });
+/******/ 				}, 120000);
+/******/ 				script.onerror = script.onload = onScriptComplete;
+/******/ 				document.head.appendChild(script);
+/******/ 			}
+/******/ 		}
+/******/ 		return Promise.all(promises);
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -78,6 +183,16 @@
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -2258,119 +2373,6 @@ module.exports = {
   stripBOM: stripBOM
 };
 
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DiaryDay.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DiaryDay.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {}
-});
 
 /***/ }),
 
@@ -22239,579 +22241,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DiaryDay.vue?vue&type=template&id=d2c92478&":
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DiaryDay.vue?vue&type=template&id=d2c92478& ***!
-  \***********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "root-container" }, [
-    _c("br"),
-    _vm._v(" "),
-    _c("h2", [_vm._v(_vm._s(_vm.days[_vm.day]))]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "mt-8 bg-white rounded border-b-4 border-gray-300" },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        this.isObjectEmpty(this.day_data)
-          ? _vm._l(_vm.lessons_count, function (count) {
-              return _c("div", [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "flex flex-wrap items-center text-gray-700 border-t-2 border-l-4 border-r-4 border-gray-300",
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-1/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(count) +
-                            "\n                        "
-                        ),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.timetable.order[count],
-                              expression: "timetable.order[count]",
-                            },
-                          ],
-                          attrs: { type: "hidden" },
-                          domProps: { value: _vm.timetable.order[count] },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.timetable.order,
-                                count,
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.timetable.teacher[count],
-                                expression: "timetable.teacher[count]",
-                              },
-                            ],
-                            staticClass:
-                              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
-                            attrs: { required: "" },
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.timetable.teacher,
-                                  count,
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                            },
-                          },
-                          _vm._l(_vm.teachers, function (teacher) {
-                            return _c(
-                              "option",
-                              { domProps: { value: teacher.id } },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(teacher.name) +
-                                    "\n                              "
-                                ),
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.timetable.lesson[count],
-                                expression: "timetable.lesson[count]",
-                              },
-                            ],
-                            staticClass:
-                              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
-                            attrs: { required: "" },
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.timetable.lesson,
-                                  count,
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                            },
-                          },
-                          _vm._l(_vm.subjects, function (subject) {
-                            return _c(
-                              "option",
-                              { domProps: { value: subject.id } },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(subject.name) +
-                                    "\n                              "
-                                ),
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-2/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.timetable.room[count],
-                              expression: "timetable.room[count]",
-                            },
-                          ],
-                          staticClass:
-                            "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
-                          attrs: { type: "text", required: "" },
-                          domProps: { value: _vm.timetable.room[count] },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.timetable.room,
-                                count,
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-1/12 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-1 px-2 mr-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 cursor-pointer",
-                            on: {
-                              click: function ($event) {
-                                _vm.lessons_count += 1
-                              },
-                            },
-                          },
-                          [_vm._v(" + ")]
-                        ),
-                        _vm._v(" "),
-                        count != 1
-                          ? [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 cursor-pointer",
-                                  on: {
-                                    click: function ($event) {
-                                      _vm.lessons_count -= 1
-                                    },
-                                  },
-                                },
-                                [_vm._v(" - ")]
-                              ),
-                            ]
-                          : _vm._e(),
-                      ],
-                      2
-                    ),
-                  ]
-                ),
-              ])
-            })
-          : _vm._l(_vm.lessons_count, function (count) {
-              return _c("div", [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "flex flex-wrap items-center text-gray-700 border-t-2 border-l-4 border-r-4 border-gray-300",
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-1/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(count) +
-                            "\n                        "
-                        ),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.timetable.order[count],
-                              expression: "timetable.order[count]",
-                            },
-                          ],
-                          attrs: { type: "hidden" },
-                          domProps: { value: _vm.timetable.order[count] },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.timetable.order,
-                                count,
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.timetable.teacher[count],
-                                expression: "timetable.teacher[count]",
-                              },
-                            ],
-                            staticClass:
-                              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
-                            attrs: { required: "" },
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.timetable.teacher,
-                                  count,
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                            },
-                          },
-                          _vm._l(_vm.teachers, function (teacher) {
-                            return _c(
-                              "option",
-                              { domProps: { value: teacher.id } },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(teacher.name) +
-                                    "\n                              "
-                                ),
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-4/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.timetable.lesson[count],
-                                expression: "timetable.lesson[count]",
-                              },
-                            ],
-                            staticClass:
-                              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
-                            attrs: { required: "" },
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.timetable.lesson,
-                                  count,
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                            },
-                          },
-                          _vm._l(_vm.subjects, function (subject) {
-                            return _c(
-                              "option",
-                              { domProps: { value: subject.id } },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(subject.name) +
-                                    "\n                              "
-                                ),
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-2/12 px-4 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.timetable.room[count],
-                              expression: "timetable.room[count]",
-                            },
-                          ],
-                          staticClass:
-                            "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
-                          attrs: { type: "text", required: "" },
-                          domProps: { value: _vm.timetable.room[count] },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.timetable.room,
-                                count,
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-1/12 py-3 text-sm font-semibold text-gray-600 tracking-tight",
-                      },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-1 px-2 mr-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 cursor-pointer",
-                            on: {
-                              click: function ($event) {
-                                _vm.lessons_count += 1
-                              },
-                            },
-                          },
-                          [_vm._v(" + ")]
-                        ),
-                        _vm._v(" "),
-                        count != 1
-                          ? [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 cursor-pointer",
-                                  on: {
-                                    click: function ($event) {
-                                      _vm.lessons_count -= 1
-                                    },
-                                  },
-                                },
-                                [_vm._v(" - ")]
-                              ),
-                            ]
-                          : _vm._e(),
-                      ],
-                      2
-                    ),
-                  ]
-                ),
-              ])
-            }),
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "text-right" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "shadow bg-blue-500 w-full mt-2 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded",
-          on: {
-            click: function ($event) {
-              return _vm.updateDay()
-            },
-          },
-        },
-        [_vm._v("Ýatda sakla")]
-      ),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "flex flex-wrap items-center uppercase text-sm font-semibold bg-gray-300 text-gray-600 rounded-tl rounded-tr",
-      },
-      [
-        _c("div", { staticClass: "w-1/12 px-4 py-3" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-4/12 px-4 py-3" }, [_vm._v("Mugallym")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-4/12 px-4 py-3" }, [_vm._v("Dersiň ady")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-2/12 px-4 py-3" }, [_vm._v("Otag")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/12 px-4 py-3" }, [_vm._v("Amal")]),
-      ]
-    )
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TimetableDay.vue?vue&type=template&id=6e7b6926&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TimetableDay.vue?vue&type=template&id=6e7b6926& ***!
@@ -35471,18 +34900,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-
-Event.fire = function (event, el) {
-  return el ? document.querySelector(el).dispatchEvent(new Event(event)) : document.dispatchEvent(new Event(event));
-};
-
-Event.listen = function (event, elemOrCallback, callback) {
-  return typeof elemOrCallback === 'function' ? document.addEventListener(event, elemOrCallback) : document.querySelector(elemOrCallback).addEventListener(event, callback);
-};
-
 Vue.component('vue-multiselect', window.VueMultiselect["default"]);
 Vue.component('timetable-day', __webpack_require__(/*! ./components/TimetableDay.vue */ "./resources/js/components/TimetableDay.vue")["default"]);
-Vue.component('diary-day', __webpack_require__(/*! ./components/DiaryDay.vue */ "./resources/js/components/DiaryDay.vue")["default"]);
+Vue.component('journal', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./components/Journal.vue */ "./resources/js/components/Journal.vue"));
+});
 var app = new Vue({
   el: '#app'
 });
@@ -35503,100 +34925,14 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Next we will register the CSRF Token as a common header with Axios so that
- * all outgoing HTTP requests automatically have it attached. This is just
- * a simple convenience so we don't have to attach every token manually.
- */
-// let token = document.head.querySelector('meta[name="csrf-token"]');
-// if (token) {
-//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-// } else {
-//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-// }
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-// import Echo from 'laravel-echo'
-// window.Pusher = require('pusher-js');
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
+Event.fire = function (event, el) {
+  return el ? document.querySelector(el).dispatchEvent(new Event(event)) : document.dispatchEvent(new Event(event));
+};
 
-/***/ }),
-
-/***/ "./resources/js/components/DiaryDay.vue":
-/*!**********************************************!*\
-  !*** ./resources/js/components/DiaryDay.vue ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DiaryDay_vue_vue_type_template_id_d2c92478___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DiaryDay.vue?vue&type=template&id=d2c92478& */ "./resources/js/components/DiaryDay.vue?vue&type=template&id=d2c92478&");
-/* harmony import */ var _DiaryDay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DiaryDay.vue?vue&type=script&lang=js& */ "./resources/js/components/DiaryDay.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DiaryDay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DiaryDay_vue_vue_type_template_id_d2c92478___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DiaryDay_vue_vue_type_template_id_d2c92478___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/DiaryDay.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/DiaryDay.vue?vue&type=script&lang=js&":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/DiaryDay.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DiaryDay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DiaryDay.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DiaryDay.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DiaryDay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/DiaryDay.vue?vue&type=template&id=d2c92478&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/DiaryDay.vue?vue&type=template&id=d2c92478& ***!
-  \*****************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DiaryDay_vue_vue_type_template_id_d2c92478___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DiaryDay.vue?vue&type=template&id=d2c92478& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DiaryDay.vue?vue&type=template&id=d2c92478&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DiaryDay_vue_vue_type_template_id_d2c92478___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DiaryDay_vue_vue_type_template_id_d2c92478___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
+Event.listen = function (event, elemOrCallback, callback) {
+  return typeof elemOrCallback === 'function' ? document.addEventListener(event, elemOrCallback) : document.querySelector(elemOrCallback).addEventListener(event, callback);
+};
 
 /***/ }),
 

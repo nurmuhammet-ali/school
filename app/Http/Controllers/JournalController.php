@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Grade;
 use App\Journal;
+use App\Student;
 use Illuminate\Http\Request;
 
 class JournalController extends Controller
@@ -14,72 +16,21 @@ class JournalController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.journals.index', [
+            'grades' => Grade::with('teacher')->get()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function grade($grade) 
     {
-        //
-    }
+        $grades = Grade::find($grade);
+        $students = Student::with('user:id,name')
+                    ->where('class_id', $grade)
+                    ->get(['id', 'user_id']);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Journal  $journal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Journal $journal)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Journal  $journal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Journal $journal)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Journal  $journal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Journal $journal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Journal  $journal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Journal $journal)
-    {
-        //
+        return view('pages.journals.grades.index', [
+            'grade' => $grades,
+            'students' => $students
+        ]);
     }
 }

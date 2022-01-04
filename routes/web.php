@@ -53,7 +53,10 @@ Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::resource('student', 'StudentController');
     Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
 
-    Route::get('journals', 'JournalController');
+    Route::get('journals', 'JournalController@index')->name('journals.index');
+    Route::get('journals/{grade}/grade', 'JournalController@grade')->name('journals.grade');
+    Route::get('journals/{grade}/grade/show', 'JournalController@grade_show')->name('journals.grade.show');
+    Route::post('journals/{grade}/grade', 'JournalController@grade_store')->name('journals.grade.update');
 });
 
 Route::group(['middleware' => ['auth','role:Teacher']], function () {
