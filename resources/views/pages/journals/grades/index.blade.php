@@ -9,7 +9,7 @@
         </div>
         @csrf
 
-        <journal grade="{{ $grade->id }}" subjects-endpoint="{{ route('get.subjects') }}" students="{{ $students }}" />
+        <journal grade="{{ $grade->id }}" journals-endpoint="{{ route('journals.grade.update', ['grade' => $grade->id]) }}" subjects-endpoint="{{ route('get.subjects') }}" students="{{ $students }}" />
 
     </div>
 @endsection

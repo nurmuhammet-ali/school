@@ -17,3 +17,11 @@ Event.listen = function(event, elemOrCallback, callback) {
             ? document.addEventListener(event, elemOrCallback)
             : document.querySelector(elemOrCallback).addEventListener(event, callback);
 }
+
+Event.fire_me = (name, argument) => {
+    document.dispatchEvent(new CustomEvent(name, {detail: argument}));
+}
+
+Event.listen_me = (name, callback) => {
+    document.addEventListener(name, callback);
+}

@@ -48,7 +48,7 @@ class StudentController extends Controller
     {
         $request->validate([
             'name'              => 'required|string|max:255',
-            'email'             => 'required|string|email|max:255|unique:users',
+            'email'             => 'nullable|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
             'parent_id'         => 'required|numeric',
             'class_id'          => 'required|numeric',
@@ -129,7 +129,7 @@ class StudentController extends Controller
     {
         $request->validate([
             'name'              => 'required|string|max:255',
-            'email'             => 'required|string|email|max:255|unique:users,email,'.$student->user_id,
+            'email'             => 'nullable|string|email|max:255|unique:users,email,'.$student->user_id,
             'parent_id'         => 'required|numeric',
             'class_id'          => 'required|numeric',
             'gender'            => 'required|string',
