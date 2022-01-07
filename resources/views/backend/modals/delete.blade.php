@@ -8,11 +8,11 @@
                 @csrf
                 @method('DELETE')
                 <div class="md:flex md:items-center mb-6">
-                    <h3 class="text-xl text-white font-bold">Are you sure you want to delete {{ $name ?? '' }}?</h3>
+                    <h3 class="text-xl text-white font-bold">{{ $name ?? '' }} pozmak isleýärsiňizmi?</h3>
                 </div>
                 <div class="md:flex md:items-center">
                     <button class="mx-auto uppercase text-sm shadow bg-red-800 hover:bg-red-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-8 rounded" type="submit">
-                        Delete
+                        Hawa
                     </button>
                 </div>
             </form>

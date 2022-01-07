@@ -4,6 +4,7 @@ import 'jquery-ui/ui/widgets/datepicker.js'
 import VModal from 'vue-js-modal'
 import ToggleButton from 'vue-js-toggle-button'
 import Inputmask from "inputmask"
+import Swal from 'sweetalert2'
 
 window.Vue = require('vue')
 
@@ -15,6 +16,12 @@ Vue.component('journal', () => import('./components/Journal.vue'))
 
 const app = new Vue({
     el: '#app',
+    data: {ok: 'ok'},
+    methods: {
+        swal(...data) {
+            Swal.fire(...data);
+        }
+    },
     mounted() {
         let phone_fields = document.querySelectorAll('input[name=phone]');
         for (var i = 0; i < phone_fields.length; i++) {

@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth','role:Admin']], function () {
 
     Route::get('timetable', 'TimetableController@index')->name('timetables.index');
     Route::get('timetable/{grade}/grade', 'TimetableController@grade')->name('timetable.grade');
-    Route::get('timetable/{grade}/grade/show', 'TimetableController@grade_show')->name('timetable.grade.show');
+    Route::get('timetable/{grade}/grades/show', 'TimetableController@grade_show')->name('timetable.grade.show');
     Route::post('timetable/{grade}/grade', 'TimetableController@grade_store')->name('timetable.grade.update');
 
     Route::get('diary', 'DiaryController@index')->name('diary.index');

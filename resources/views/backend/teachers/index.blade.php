@@ -42,7 +42,7 @@
             {{ $teachers->links() }}
         </div>
 
-        @include('backend.modals.delete',['name' => 'teacher'])
+        @include('backend.modals.delete',['name' => 'Mugallym'])
     </div>
 @endsection
 

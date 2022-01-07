@@ -23,6 +23,7 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "@mathieustan/vue-datepicker": "^0.2.11",
     "axios": "^0.24.0",
     "inputmask": "^5.0.7",
     "nice-select2": "^2.0.0",

@@ -45,7 +45,7 @@
             {{ $students->links() }}
         </div>
 
-        @include('backend.modals.delete',['name' => 'student'])
+        @include('backend.modals.delete',['name' => 'Okuwçyny'])
     </div>
 @endsection
 

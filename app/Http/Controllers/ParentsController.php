@@ -70,6 +70,7 @@ class ParentsController extends Controller
 
         $user->assignRole('ene_ata');
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('parents.index');
     }
 
@@ -131,6 +132,7 @@ class ParentsController extends Controller
             'phone'             => $request->phone,
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('parents.index');
     }
 
@@ -157,7 +159,8 @@ class ParentsController extends Controller
         }
 
         $parent->delete();
-
+        
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return back();
     }
 }

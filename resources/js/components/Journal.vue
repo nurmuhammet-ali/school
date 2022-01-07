@@ -3,33 +3,18 @@
         <div class="flex flex-wrap">
             <div class="w-1/12 px-1">
                 <label>Çärýek</label>
-                <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 text-center" v-model="semester" @change="semester_change()" :disabled="semester_disabled">
+                <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="semester" @change="semester_change()">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
             </div>
-            <div class="w-1/12 px-1">
-                <label>Hepde</label>
-                <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 text-center" v-model="week" @change="week_change()" :disabled="week_disabled">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-            </div>
-            <div class="w-2/12 px-1">
-                <label>Gün</label>
-                <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="day" @change="day_change()" :disabled="day_disabled">
-                    <option value="monday">Duşenbe</option>
-                    <option value="tuesday">Sişenbe</option>
-                    <option value="wednesday">Çarşenbe</option>
-                    <option value="thursday">Penşenbe</option>
-                    <option value="friday">Anna</option>
-                    <option value="saturday">Şenbe</option>
-                    <!-- <option value="sunday">Ýekşenbe</option> -->
-                </select>
+            <div class="w-3/12 px-1">
+                <label>Sene</label>
+                <div class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <VueDatePicker v-model="date" @onChange="date_change()" :locale="datepicker_locale" format="DD.MM.YYYY" placeholder="" :disabled="date_disabled" />
+                </div>
             </div>
             <div class="w-2/12 px-1">
                 <label>Ders</label>
@@ -66,37 +51,40 @@
 <script>
     import JournalMark from './JournalMark.vue'
     import Swal from 'sweetalert2'
+    import { VueDatePicker } from '@mathieustan/vue-datepicker';
+    import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css';
+    import tm from '../locale/tm'
 
     export default {
         props: ['grade', 'students', 'subjects-endpoint', 'journals-endpoint'],
+         components: {
+            VueDatePicker
+        },
         data() {
             return {
                 semester: null,
-                week: null,
+                date: null,
                 day: null,
                 lesson: null,
                 topic: '',
-                semester_disabled: false,
-                week_disabled: true,
-                day_disabled: true,
+                date_disabled: true,
                 lesson_disabled: true,
                 subjects: [],
                 users: [],
-                student_models: [] // {id: 3, mark: 5}
+                student_models: [], // {id: 3, mark: 5}
+                datepicker_locale: tm
             };
         },
         methods: {
             semester_change() {
-                this.week_disabled = false;
+                this.date_disabled = false;
 
                 this.setSubjects();
             },
-            week_change() {
-                this.day_disabled = false;
-            },
-            day_change() {
-                this.lesson_disabled = false;
+            date_change() {
+                this.day = new Date(this.date).toLocaleString("en", { weekday: "long" });
 
+                this.lesson_disabled = false;
                 this.setSubjects();
             },
             lesson_change() {

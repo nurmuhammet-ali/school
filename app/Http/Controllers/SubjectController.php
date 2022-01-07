@@ -17,7 +17,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('teacher')->latest()->paginate(10);
+        $subjects = Subject::latest()->paginate(10);
 
         return view('backend.subjects.index', compact('subjects'));
     }
@@ -48,10 +48,10 @@ class SubjectController extends Controller
         Subject::create([
             'name'          => $request->name,
             'slug'          => Str::slug($request->name),
-            'subject_code'  => rand(100, 1000),
             'description'   => $request->description
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('subject.index');
     }
 
@@ -97,6 +97,7 @@ class SubjectController extends Controller
             'description'   => $request->description
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('subject.index');
     }
 
@@ -110,6 +111,7 @@ class SubjectController extends Controller
     {
         $subject->delete();
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return back();
     }
 }

@@ -38806,7 +38806,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var inputmask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! inputmask */ "./node_modules/inputmask/dist/inputmask.js");
 /* harmony import */ var inputmask__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(inputmask__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -38822,6 +38825,14 @@ Vue.component('journal', function () {
 });
 var app = new Vue({
   el: '#app',
+  data: {
+    ok: 'ok'
+  },
+  methods: {
+    swal: function swal() {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire.apply(sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a, arguments);
+    }
+  },
   mounted: function mounted() {
     var phone_fields = document.querySelectorAll('input[name=phone]');
 

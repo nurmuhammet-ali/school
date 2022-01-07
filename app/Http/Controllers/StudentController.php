@@ -20,7 +20,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('class')->latest()->paginate(10);
+        $students = Student::with(['class', 'user'])->latest()->paginate(10);
 
         return view('backend.students.index', compact('students'));
     }
@@ -88,6 +88,7 @@ class StudentController extends Controller
 
         $user->assignRole('okuwcy');
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('student.index');
     }
 
@@ -162,6 +163,7 @@ class StudentController extends Controller
             'permanent_address' => $request->permanent_address
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('student.index');
     }
 
@@ -186,6 +188,7 @@ class StudentController extends Controller
             }
         }
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return back();
     }
 }

@@ -69,6 +69,7 @@ class TeacherController extends Controller
 
         $user->assignRole('mugallym');
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('teacher.index');
     }
 
@@ -107,7 +108,7 @@ class TeacherController extends Controller
     {
         $request->validate([
             'name'              => 'required|string|max:255',
-            'email'             => 'required|string|email|max:255|unique:users,email,'.$teacher->user_id,
+            'email'             => 'nullable|string|email|max:255|unique:users,email,'.$teacher->user_id,
             'phone'             => 'required|string|max:255',
         ]);
 
@@ -130,6 +131,7 @@ class TeacherController extends Controller
             'phone'             => $request->phone,
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('teacher.index');
     }
 
@@ -156,6 +158,7 @@ class TeacherController extends Controller
             }
         }
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return back();
     }
 }

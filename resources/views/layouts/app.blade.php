@@ -50,7 +50,7 @@
 
     @if(session()->has('message'))
         <script>
-            alert('{{ session('message') }}');
+            app.__vue__.swal('{{ session('message') }}', '', 'success');
         </script>
     @endif
 

@@ -5,7 +5,7 @@
 
         <div class="flex items-center justify-between mb-6">
             <div>
-                <h2 class="text-gray-700 uppercase font-bold">Edit Subject</h2>
+                <h2 class="text-gray-700 uppercase font-bold">Okuw dersini Üýtget</h2>
             </div>
             <div class="flex flex-wrap items-center">
                 <a href="{{ route('subject.index') }}" class="bg-gray-200 text-gray-700 text-sm uppercase py-2 px-4 flex items-center rounded">
@@ -22,7 +22,7 @@
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                            Okuw dersiň ady
+                            Okuw dersiň ady <span class="text-red-400"> *</span>
                         </label>
                     </div>
                     <div class="md:w-2/3">

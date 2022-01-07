@@ -55,6 +55,7 @@ class GradeController extends Controller
             'class_description' => $request->class_description
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('classes.index');
     }
 
@@ -96,7 +97,7 @@ class GradeController extends Controller
             'class_name'        => 'required|string|max:255|unique:grades,class_name,'.$id,
             'class_numeric'     => 'required|numeric',
             'teacher_id'        => 'required|numeric',
-            'class_description' => 'required|string|max:255'
+            'class_description' => 'nullable|string|max:255'
         ]);
 
         $class = Grade::findOrFail($id);
@@ -108,6 +109,7 @@ class GradeController extends Controller
             'class_description' => $request->class_description
         ]);
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return redirect()->route('classes.index');
     }
 
@@ -124,6 +126,7 @@ class GradeController extends Controller
         $class->subjects()->detach();
         $class->delete();
 
+        session()->flash('message', 'Üstünlikli ýerine ýetirildi');
         return back();
     }
 
