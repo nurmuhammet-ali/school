@@ -2,6 +2,13 @@ module.exports = {
   prefix: '',
   important: false,
   separator: ':',
+  // purge: {
+  //      enable: true,
+  //       content: [
+  //         './storage/framework/views/*.php',
+  //         './resources/views/**/*.blade.php'
+  //     ]
+  // },
   theme: {
     colors: {
       transparent: 'transparent',

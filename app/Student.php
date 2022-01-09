@@ -18,6 +18,8 @@ class Student extends Model
         'permanent_address',
     ];
 
+    protected $with = ['user', 'class'];
+
     public function user() 
     {
         return $this->belongsTo(User::class);

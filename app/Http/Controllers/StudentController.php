@@ -53,8 +53,8 @@ class StudentController extends Controller
             'parent_id'         => 'required|numeric',
             'class_id'          => 'required|numeric',
             'gender'            => 'required|string',
-            'phone'             => 'required|string|max:255',
-            'dateofbirth'       => 'required|date',
+            'phone'             => 'nullable|string|max:255',
+            'dateofbirth'       => 'required',
             'current_address'   => 'required|string|max:255',
             'permanent_address' => 'required|string|max:255'
         ]);
@@ -134,8 +134,8 @@ class StudentController extends Controller
             'parent_id'         => 'required|numeric',
             'class_id'          => 'required|numeric',
             'gender'            => 'required|string',
-            'phone'             => 'required|string|max:255',
-            'dateofbirth'       => 'required|date',
+            'phone'             => 'nullable|string|max:255',
+            'dateofbirth'       => 'required',
             'current_address'   => 'required|string|max:255',
             'permanent_address' => 'required|string|max:255'
         ]);

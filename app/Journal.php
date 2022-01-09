@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Journal extends Model
 {
-    protected $fillable = ['semester', 'week', 'day', 'lesson', 'topic', 'grade_id', 'students'];
+    protected $fillable = ['semester', 'date', 'lesson', 'topic', 'homework', 'grade_id', 'students'];
+
+    protected $dates = [
+        'date'
+    ];
 }

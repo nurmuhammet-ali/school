@@ -16,7 +16,7 @@
                     <VueDatePicker v-model="date" @onChange="date_change()" :locale="datepicker_locale" format="DD.MM.YYYY" placeholder="" :disabled="date_disabled" />
                 </div>
             </div>
-            <div class="w-2/12 px-1">
+            <div class="w-3/12 px-1">
                 <label>Ders</label>
                 <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="lesson" @change="lesson_change()" :disabled="lesson_disabled">
                     <option v-for="subject in subjects" :value="setTimetableValue(subject)">
@@ -24,12 +24,20 @@
                     </option>
                 </select>
             </div>
-            <div class="w-6/12 px-1 text-right pt-6">
+            <div class="w-3/12 px-1">
+                <label>Mulgallym</label>
+                <input type="text" class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="teacher" disabled />
+            </div>
+            <div class="w-2/12 px-1 text-right pt-6">
                 <button @click="saveJournal" class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Tamamla</button>
             </div>
-            <div class="w-full px-1 pt-2">
+            <div class="w-1/2 px-1 pt-2">
                 <label>Tema</label>
                 <input type="text" class="mt-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="topic">
+            </div>
+            <div class="w-1/2 px-1 pt-2">
+                <label>Öý işi</label>
+                <input type="text" class="mt-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="homework">
             </div>
         </div>
 
@@ -56,7 +64,7 @@
     import tm from '../locale/tm'
 
     export default {
-        props: ['grade', 'students', 'subjects-endpoint', 'journals-endpoint'],
+        props: ['grade', 'students', 'subjects-endpoint', 'journals-set-endpoint', 'journals-get-endpoint'],
          components: {
             VueDatePicker
         },
@@ -67,6 +75,8 @@
                 day: null,
                 lesson: null,
                 topic: '',
+                homework: '',
+                teacher: '',
                 date_disabled: true,
                 lesson_disabled: true,
                 subjects: [],
@@ -80,15 +90,19 @@
                 this.date_disabled = false;
 
                 this.setSubjects();
+                this.getJournal();
             },
             date_change() {
                 this.day = new Date(this.date).toLocaleString("en", { weekday: "long" });
 
                 this.lesson_disabled = false;
                 this.setSubjects();
+                this.getJournal();
             },
             lesson_change() {
-
+                this.getJournal();
+                let timetable_lesson = JSON.parse(this.lesson);
+                this.teacher = timetable_lesson.teacher.name;
             },
             applyActionTo(id) {
                 this.$modal.show(JournalMark, {student: id}, { height: '140px' });
@@ -114,10 +128,12 @@
 
                 let response = await axios.post(this.subjectsEndpoint, formData);
                 this.subjects = response.data;
-                console.log(response.data);
+                if (response.data.length < 1) {
+                    this.teacher = '';
+                }
             },
             async saveJournal() {
-                if (! this.journalsEndpoint || ! this.fieldsAreFilled()) {
+                if (! this.journalsSetEndpoint || ! this.fieldsAreFilled()) {
                     Swal.fire('', 'Maglumatlary dolduryň', 'error');
                     return;
                 }
@@ -125,31 +141,59 @@
                 let formData = new FormData();
                 formData.append('_token', document.querySelector('input[name=_token]').value);
                 formData.append('semester', this.semester);
-                formData.append('week', this.week);
-                formData.append('day', this.day);
+                formData.append('date', this.date);
                 formData.append('lesson', this.lesson);
                 formData.append('topic', this.topic);
+                formData.append('homework', this.homework);
                 formData.append('students', JSON.stringify(this.student_models));
 
-                let response = await axios.post(this.journalsEndpoint, formData);
-                console.log(response.data);
+                let response = await axios.post(this.journalsSetEndpoint, formData);
+                
                 if (response.data.success == 'true') {
                     Swal.fire('Üstünlikli ýerine ýetirildi.', '', 'success');
                 }
             },
+            async getJournal() {
+                if (this.semester && this.date && this.lesson) {
+
+                    let formData = new FormData();
+                    formData.append('_token', document.querySelector('input[name=_token]').value);
+                    formData.append('grade', this.grade);
+                    formData.append('semester', this.semester);
+                    formData.append('date', this.date);
+                    formData.append('lesson', this.lesson);
+
+                    let response = await axios.post(this.journalsGetEndpoint, formData);
+                    if (response.data) {
+                        this.topic = response.data.topic;
+                        this.homework = response.data.homework;
+
+                        // Student marks
+                        let students = JSON.parse(response.data.students);
+                        students.forEach((student, i) => {
+                            if (this.student_models[i].id == student.id) {
+                                this.student_models[i].mark = student.mark; 
+                            }
+                        });
+                    } else {
+                        this.topic = '';
+                        this.homework = '';
+                        this.student_models.forEach(student => {
+                            student.mark = '';
+                        });
+                    }
+                }
+            },
             fieldsAreFilled() {
-                if ( !this.semester && !this.week && ! this.day && ! this.lesson ) return false;
+                if ( !this.semester && !this.date && ! this.lesson ) return false;
 
                 if (! (this.topic.length > 1)) {
                     return false;
                 }
 
-                // let valid_dates = [1, 2, 3, 4];
-                // let valid_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-
-                // if (! valid_dates.includes(this.semester) || ! valid_dates.includes(this.week) || ! valid_days.includes(this.day)) {
-                //     return false;
-                // }
+                if (! (this.homework.length > 1)) {
+                    return false;
+                }
 
                 let result = true;
                 for (let i = 0; i < this.student_models.length; i++) {

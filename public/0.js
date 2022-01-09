@@ -74,13 +74,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['grade', 'students', 'subjects-endpoint', 'journals-endpoint'],
+  props: ['grade', 'students', 'subjects-endpoint', 'journals-set-endpoint', 'journals-get-endpoint'],
   components: {
     VueDatePicker: _mathieustan_vue_datepicker__WEBPACK_IMPORTED_MODULE_3__["VueDatePicker"]
   },
@@ -91,6 +99,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       day: null,
       lesson: null,
       topic: '',
+      homework: '',
+      teacher: '',
       date_disabled: true,
       lesson_disabled: true,
       subjects: [],
@@ -104,6 +114,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     semester_change: function semester_change() {
       this.date_disabled = false;
       this.setSubjects();
+      this.getJournal();
     },
     date_change: function date_change() {
       this.day = new Date(this.date).toLocaleString("en", {
@@ -111,8 +122,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
       this.lesson_disabled = false;
       this.setSubjects();
+      this.getJournal();
     },
-    lesson_change: function lesson_change() {},
+    lesson_change: function lesson_change() {
+      this.getJournal();
+      var timetable_lesson = JSON.parse(this.lesson);
+      this.teacher = timetable_lesson.teacher.name;
+    },
     applyActionTo: function applyActionTo(id) {
       this.$modal.show(_JournalMark_vue__WEBPACK_IMPORTED_MODULE_1__["default"], {
         student: id
@@ -161,7 +177,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 response = _context.sent;
                 _this2.subjects = response.data;
-                console.log(response.data);
+
+                if (response.data.length < 1) {
+                  _this2.teacher = '';
+                }
 
               case 12:
               case "end":
@@ -180,7 +199,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(!_this3.journalsEndpoint || !_this3.fieldsAreFilled())) {
+                if (!(!_this3.journalsSetEndpoint || !_this3.fieldsAreFilled())) {
                   _context2.next = 3;
                   break;
                 }
@@ -192,23 +211,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData = new FormData();
                 formData.append('_token', document.querySelector('input[name=_token]').value);
                 formData.append('semester', _this3.semester);
-                formData.append('week', _this3.week);
-                formData.append('day', _this3.day);
+                formData.append('date', _this3.date);
                 formData.append('lesson', _this3.lesson);
                 formData.append('topic', _this3.topic);
+                formData.append('homework', _this3.homework);
                 formData.append('students', JSON.stringify(_this3.student_models));
                 _context2.next = 13;
-                return axios.post(_this3.journalsEndpoint, formData);
+                return axios.post(_this3.journalsSetEndpoint, formData);
 
               case 13:
                 response = _context2.sent;
-                console.log(response.data);
 
                 if (response.data.success == 'true') {
                   sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Üstünlikli ýerine ýetirildi.', '', 'success');
                 }
 
-              case 16:
+              case 15:
               case "end":
                 return _context2.stop();
             }
@@ -216,17 +234,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    getJournal: function getJournal() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var formData, response, students;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this4.semester && _this4.date && _this4.lesson)) {
+                  _context3.next = 11;
+                  break;
+                }
+
+                formData = new FormData();
+                formData.append('_token', document.querySelector('input[name=_token]').value);
+                formData.append('grade', _this4.grade);
+                formData.append('semester', _this4.semester);
+                formData.append('date', _this4.date);
+                formData.append('lesson', _this4.lesson);
+                _context3.next = 9;
+                return axios.post(_this4.journalsGetEndpoint, formData);
+
+              case 9:
+                response = _context3.sent;
+
+                if (response.data) {
+                  _this4.topic = response.data.topic;
+                  _this4.homework = response.data.homework; // Student marks
+
+                  students = JSON.parse(response.data.students);
+                  students.forEach(function (student, i) {
+                    if (_this4.student_models[i].id == student.id) {
+                      _this4.student_models[i].mark = student.mark;
+                    }
+                  });
+                } else {
+                  _this4.topic = '';
+                  _this4.homework = '';
+
+                  _this4.student_models.forEach(function (student) {
+                    student.mark = '';
+                  });
+                }
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
     fieldsAreFilled: function fieldsAreFilled() {
-      if (!this.semester && !this.week && !this.day && !this.lesson) return false;
+      if (!this.semester && !this.date && !this.lesson) return false;
 
       if (!(this.topic.length > 1)) {
         return false;
-      } // let valid_dates = [1, 2, 3, 4];
-      // let valid_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-      // if (! valid_dates.includes(this.semester) || ! valid_dates.includes(this.week) || ! valid_days.includes(this.day)) {
-      //     return false;
-      // }
+      }
 
+      if (!(this.homework.length > 1)) {
+        return false;
+      }
 
       var result = true;
 
@@ -240,14 +310,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.users = JSON.parse(this.students);
     this.setStudentsModels();
     Event.listen_me('journal-mark', function (argument) {
-      for (var i = 0; i < _this4.student_models.length; i++) {
-        if (_this4.student_models[i].id == argument.detail.student) {
-          _this4.student_models[i].mark = argument.detail.mark;
+      for (var i = 0; i < _this5.student_models.length; i++) {
+        if (_this5.student_models[i].id == argument.detail.student) {
+          _this5.student_models[i].mark = argument.detail.mark;
         }
       }
     });
@@ -421,7 +491,7 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "w-2/12 px-1" }, [
+      _c("div", { staticClass: "w-3/12 px-1" }, [
         _c("label", [_vm._v("Ders")]),
         _vm._v(" "),
         _c(
@@ -476,7 +546,34 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "w-6/12 px-1 text-right pt-6" }, [
+      _c("div", { staticClass: "w-3/12 px-1" }, [
+        _c("label", [_vm._v("Mulgallym")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.teacher,
+              expression: "teacher",
+            },
+          ],
+          staticClass:
+            "mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+          attrs: { type: "text", disabled: "" },
+          domProps: { value: _vm.teacher },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.teacher = $event.target.value
+            },
+          },
+        }),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-2/12 px-1 text-right pt-6" }, [
         _c(
           "button",
           {
@@ -488,7 +585,7 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "w-full px-1 pt-2" }, [
+      _c("div", { staticClass: "w-1/2 px-1 pt-2" }, [
         _c("label", [_vm._v("Tema")]),
         _vm._v(" "),
         _c("input", {
@@ -510,6 +607,33 @@ var render = function () {
                 return
               }
               _vm.topic = $event.target.value
+            },
+          },
+        }),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-1/2 px-1 pt-2" }, [
+        _c("label", [_vm._v("Öý işi")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.homework,
+              expression: "homework",
+            },
+          ],
+          staticClass:
+            "mt-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500",
+          attrs: { type: "text" },
+          domProps: { value: _vm.homework },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.homework = $event.target.value
             },
           },
         }),

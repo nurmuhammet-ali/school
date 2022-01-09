@@ -16,7 +16,6 @@ Vue.component('journal', () => import('./components/Journal.vue'))
 
 const app = new Vue({
     el: '#app',
-    data: {ok: 'ok'},
     methods: {
         swal(...data) {
             Swal.fire(...data);

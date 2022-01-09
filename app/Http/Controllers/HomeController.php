@@ -40,9 +40,11 @@ class HomeController extends Controller
 
             return view('home', compact('parents','teachers','students'));
         } elseif ($user->hasRole('mugallym')) {
+
             $teacher = Teacher::with(['user','students'])->findOrFail($user->teacher->id);
 
             return view('home', compact('teacher'));
+        
         } elseif ($user->hasRole('ene_ata')) {
             $parents = Parents::with(['children'])->withCount('children')->findOrFail($user->parent->id); 
 
@@ -128,5 +130,12 @@ class HomeController extends Controller
 
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function upload(Request $request) 
+    {
+        $request->file('file')->store('public');
+
+        return back();
     }
 }

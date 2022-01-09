@@ -27,26 +27,10 @@
                         <div class="w-1/2 text-sm text-right">Klas :</div>
                         <div class="w-1/2 text-sm text-left ml-2">{{ $children->roll_number }}</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div class="w-1/2 text-sm text-right">Telefon :</div>
-                        <div class="w-1/2 text-sm text-left ml-2">{{ $children->phone }}</div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="w-1/2 text-sm text-right">Jynsy :</div>
-                        <div class="w-1/2 text-sm text-left ml-2">{{ $children->gender }}</div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="w-1/2 text-sm text-right">Doglan senesi :</div>
-                        <div class="w-1/2 text-sm text-left ml-2">{{ $children->dateofbirth }}</div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="w-1/2 text-sm text-right">Salgy :</div>
-                        <div class="w-1/2 text-sm text-left ml-2">{{ $children->current_address }}</div>
-                    </div>
-
                     <div class="mt-6">
-                        <a href="{{ route('attendance.show',$children->id) }}" class="bg-gray-100 inline-block mb-4 text-xs text-gray-600 uppercase font-semibold px-4 py-2 border border-gray-400 rounded">Gatnaşyk</a>
-                        {{-- <a href="{{ route('teacher.attendance.create',$children->id) }}" class="bg-gray-100 inline-block mb-4 text-xs text-gray-600 uppercase font-semibold px-4 py-2 border border-gray-400 rounded">Fees</a> --}}
+                        <a href="{{ route('child.diary', ['student' => $children->id]) }}" class="bg-gray-100 inline-block mb-4 text-xs text-gray-600 uppercase font-semibold px-4 py-2 border border-gray-400 rounded">
+                            Okaýan dersleri
+                        </a>
                     </div>
                 </div>
             </div>

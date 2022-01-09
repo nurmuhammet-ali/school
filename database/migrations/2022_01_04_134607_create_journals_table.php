@@ -16,10 +16,10 @@ class CreateJournalsTable extends Migration
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
             $table->enum('semester', [1,2,3,4]);
-            $table->enum('week', [1,2,3,4]);
-            $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']);
+            $table->date('date');
             $table->json('lesson');
             $table->string('topic');
+            $table->string('homework');
             $table->foreignId('grade_id')->constrained();
             $table->json('students');
             $table->timestamps();

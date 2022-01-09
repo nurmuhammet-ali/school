@@ -21,6 +21,11 @@ Route::put('/profile/update', 'HomeController@profileUpdate')->name('profile.upd
 Route::get('/profile/changepassword', 'HomeController@changePasswordForm')->name('profile.change.password');
 Route::post('/profile/changepassword', 'HomeController@changePassword')->name('profile.changepassword');
 
+Route::get('journals', 'JournalController@index')->name('journals.index');
+Route::get('journals/{grade}/grade', 'JournalController@grade')->name('journals.grade');
+Route::post('journals/{grade}/grade', 'JournalController@grade_store')->name('journals.grade.update');
+Route::get('child/{student}/diary', 'DashboardController@child_diary')->name('child.diary');
+
 Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::get('/roles-permissions', 'RolePermissionController@roles')->name('roles-permissions');
     Route::get('/role-create', 'RolePermissionController@createRole')->name('role.create');
@@ -41,10 +46,6 @@ Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::get('timetable/{grade}/grades/show', 'TimetableController@grade_show')->name('timetable.grade.show');
     Route::post('timetable/{grade}/grade', 'TimetableController@grade_store')->name('timetable.grade.update');
 
-    Route::get('diary', 'DiaryController@index')->name('diary.index');
-    Route::get('diary/{grade}/grade', 'DiaryController@grade')->name('diary.grade');
-    Route::get('diary/{grade}/grade/show', 'DiaryController@grade_show')->name('diary.grade.show');
-
     Route::resource('assignrole', 'RoleAssign');
     Route::resource('classes', 'GradeController');
     Route::resource('subject', 'SubjectController');
@@ -52,21 +53,19 @@ Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::resource('parents', 'ParentsController');
     Route::resource('student', 'StudentController');
     Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
-
-    Route::get('journals', 'JournalController@index')->name('journals.index');
-    Route::get('journals/{grade}/grade', 'JournalController@grade')->name('journals.grade');
-    Route::get('journals/{grade}/grade/show', 'JournalController@grade_show')->name('journals.grade.show');
-    Route::post('journals/{grade}/grade', 'JournalController@grade_store')->name('journals.grade.update');
 });
 
-Route::group(['middleware' => ['auth','role:Teacher']], function () {
+Route::group(['middleware' => ['auth','role:mugallym']], function () {
     Route::post('attendance', 'AttendanceController@store')->name('teacher.attendance.store');
     Route::get('attendance-create/{classid}', 'AttendanceController@createByTeacher')->name('teacher.attendance.create');
+
+    Route::get('/teachers/subjects', 'DashboardController@teacher_subjects')->name('teacher.subjects');
+    Route::get('/teachers/subjects/show', 'DashboardController@teacher_subjects_show')->name('teacher.subjects.show');
+    // Route::get('/teachers/journals/{grade}', 'JournalController@grade')->name('teacher.journals.grade');
 });
 
-Route::group(['middleware' => ['auth','role:Parent']], 
-    fn () => Route::get('attendance/{attendance}', 'AttendanceController@show')->name('attendance.show'));
-
-Route::group(['middleware' => ['auth','role:Student']], function () {
-
+Route::group(['middleware' => ['auth','role:ene_ata']], function () {
+    Route::get('attendance/{attendance}', 'AttendanceController@show')->name('attendance.show');
 });
+
+Route::group(['middleware' => ['auth','role:okuwcy']], function () {});

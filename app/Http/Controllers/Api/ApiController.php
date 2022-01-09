@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Journal;
 use App\Timetable;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ApiController extends Controller
 {
@@ -46,15 +47,23 @@ class ApiController extends Controller
         return false;
     }
 
-    public function journals() 
+    public function journals(Request $request) 
     {
-        $data = Journal::where('semester', 1)
-                ->where('week', 1)
-                ->where('day', 'monday')
-                ->where('grade_id', 1)
-                ->where('lesson', $lesson)
-                ->first();
+        $validated = $request->validate([
+            'grade' => ['required', 'exists:grades,id'],
+            'semester' => ['required', Rule::in([1,2,3,4])],
+            'date' => ['required', 'date'],
+            'lesson' => ['required', 'json']
+        ]);
 
-        return $data;
+        $timetable = json_decode($request->lesson);
+        $journal = Journal::where('semester', $request->semester)
+                    ->whereDate('date', $request->date)
+                    ->where('grade_id', $request->grade)
+                    ->where('lesson->order', $timetable->order)
+                    ->where('lesson->lesson->id', $timetable->lesson->id)
+                    ->first();
+
+        return $journal;
     }
 }

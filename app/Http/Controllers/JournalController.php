@@ -12,11 +12,6 @@ use Illuminate\Validation\Rule;
 
 class JournalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('pages.journals.index', [
@@ -41,22 +36,21 @@ class JournalController extends Controller
     {
         $validated = $request->validate([
             'semester' => ['required', 'bail', Rule::in([1, 2, 3, 4])],
-            'week' => ['required', 'bail', Rule::in([1, 2, 3, 4])],
-            'day' => ['required', 'bail', Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])],
-            'lesson' => ['required', 'bail'],
+            'date' => ['required', 'date'],
+            'lesson' => ['required', 'string', 'bail'],
             'topic' => ['required', 'bail', 'string'],
+            'homework' => ['required', 'string', 'bail'],
             'students' => ['required']
         ]);
         $validated['grade_id'] = $grade;
 
         $timetable = json_decode($request->lesson);
         $journal = Journal::where('semester', $request->semester)
-                ->where('week', $request->week)
-                ->where('day', $request->day)
-                ->where('grade_id', $grade)
-                ->where('lesson->order', $timetable->order)
-                ->where('lesson->lesson->id', $timetable->lesson->id)
-                ->first();
+                    ->whereDate('date', $request->date)
+                    ->where('grade_id', $grade)
+                    ->where('lesson->order', $timetable->order)
+                    ->where('lesson->lesson->id', $timetable->lesson->id)
+                    ->first();
 
         if ($journal) {
             $journal->update($validated);

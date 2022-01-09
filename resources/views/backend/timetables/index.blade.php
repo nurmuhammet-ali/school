@@ -4,7 +4,7 @@
     <div class="roles-permissions">
         <div class="flex items-center justify-between mb-6">
             <div>
-                <h2 class="text-gray-700 uppercase font-bold">Raspisaniýa</h2>
+                <h2 class="text-gray-700 uppercase font-bold">Tertipnama</h2>
             </div>
         </div>
 
