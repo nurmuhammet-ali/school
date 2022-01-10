@@ -7,7 +7,6 @@
                 @foreach ($teacher->classes as $class)
                     <div class="w-full sm:w-1/2 text-center border border-gray-200 rounded">
                         <div class="text-gray-800 uppercase font-semibold px-4 py-4 mb-2">{{ $class->class_name }}</div>
-                        <a href="{{ route('teacher.attendance.create',$class->id) }}" class="bg-gray-200 inline-block mb-4 text-xs text-gray-600 uppercase font-semibold px-4 py-2 border border-gray-200 rounded">Gatnaşyk</a>
                     </div>
                 @endforeach
             </div>

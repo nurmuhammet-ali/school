@@ -9,6 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/css/boxicons.min.css">
     <link rel="stylesheet" href="/vue-multiselect.min.css">
     <script>
         window.Lara = {};
@@ -24,7 +25,7 @@
             
             @include('layouts.sidebar')
 
-            <div class="content w-full sm:w-5/6">
+            <div class="content w-full">
                 <div class="container mx-auto p-4 sm:p-6">
 
                     @yield('content')
@@ -35,6 +36,18 @@
     </div>
 
     @include('backend.modals.info')
+
+    <script>
+        (function () {
+            var toggleBtn = document.getElementById('header-toggle'),
+                nav = document.getElementById('navbar');
+
+            toggleBtn.addEventListener('click', function(e) {
+                nav.classList.toggle('show-menu');
+                toggleBtn.classList.toggle('bx-x')
+            });
+        })();
+    </script>
     <script src="/vue-multiselect.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 

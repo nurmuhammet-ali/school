@@ -17,6 +17,15 @@ Vue.component('journal', () => import('./components/Journal.vue'))
 const app = new Vue({
     el: '#app',
     methods: {
+        initializeNavbar() {
+            let toggleBtn = document.getElementById('header-toggle');
+            let nav = document.getElementById('navbar');
+
+            toggleBtn.addEventListener('click', function(e) {
+                nav.classList.toggle('show-menu');
+                toggleBtn.classList.toggle('bx-x');
+            });
+        },
         swal(...data) {
             Swal.fire(...data);
         }
@@ -26,5 +35,7 @@ const app = new Vue({
         for (var i = 0; i < phone_fields.length; i++) {
             Inputmask({"mask": "+(\\9\\93)-99-99-99-99"}).mask(phone_fields[i]);
         }
+
+        this.initializeNavbar();
     }
 });

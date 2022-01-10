@@ -21,10 +21,12 @@ Route::put('/profile/update', 'HomeController@profileUpdate')->name('profile.upd
 Route::get('/profile/changepassword', 'HomeController@changePasswordForm')->name('profile.change.password');
 Route::post('/profile/changepassword', 'HomeController@changePassword')->name('profile.changepassword');
 
-Route::get('journals', 'JournalController@index')->name('journals.index');
-Route::get('journals/{grade}/grade', 'JournalController@grade')->name('journals.grade');
-Route::post('journals/{grade}/grade', 'JournalController@grade_store')->name('journals.grade.update');
-Route::get('child/{student}/diary', 'DashboardController@child_diary')->name('child.diary');
+Route::middleware('auth')->group(function () {
+    Route::get('journals', 'JournalController@index')->name('journals.index');
+    Route::get('journals/{grade}/grade', 'JournalController@grade')->name('journals.grade');
+    Route::post('journals/{grade}/grade', 'JournalController@grade_store')->name('journals.grade.update');
+    Route::get('child/{student}/diary', 'DashboardController@child_diary')->name('child.diary');
+});
 
 Route::group(['middleware' => ['auth','role:Admin']], function () {
     Route::get('/roles-permissions', 'RolePermissionController@roles')->name('roles-permissions');

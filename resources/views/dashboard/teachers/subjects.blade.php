@@ -9,7 +9,7 @@
         </div>
 
         <br>
-        <h2>Çärýegi saýlaň</h2>
+        <h2 class="text-black">Çärýegi saýlaň</h2>
         <br>
         <div class="border">
             <a href="{{ route('teacher.subjects.show', ['semester' => 1]) }}">
