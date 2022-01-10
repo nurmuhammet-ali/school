@@ -80,7 +80,10 @@
 
         <a href="#" class="nav__link nav__logout">
             <i class='bx bx-log-out nav__icon' ></i>
-            <span class="nav__name">Log Out</span>
+            <form action="{{ route('logout') }}" method="POST" class="pb-2">
+                @csrf
+                <button type="submit" class="nav__name">Ulgamdan çyk</button>
+            </form>
         </a>
     </nav>
 </div>

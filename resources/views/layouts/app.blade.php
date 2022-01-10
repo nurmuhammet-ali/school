@@ -37,17 +37,6 @@
 
     @include('backend.modals.info')
 
-    <script>
-        (function () {
-            var toggleBtn = document.getElementById('header-toggle'),
-                nav = document.getElementById('navbar');
-
-            toggleBtn.addEventListener('click', function(e) {
-                nav.classList.toggle('show-menu');
-                toggleBtn.classList.toggle('bx-x')
-            });
-        })();
-    </script>
     <script src="/vue-multiselect.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 

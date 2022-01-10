@@ -2,7 +2,7 @@
     <div class="root-container">
         <div class="flex flex-wrap">
             <div class="w-1/12 px-1">
-                <label>Çärýek</label>
+                <label class="text-black">Çärýek</label>
                 <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="semester" @change="semester_change()">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -11,13 +11,13 @@
                 </select>
             </div>
             <div class="w-3/12 px-1">
-                <label>Sene</label>
+                <label class="text-black">Sene</label>
                 <div class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                     <VueDatePicker v-model="date" @onChange="date_change()" :locale="datepicker_locale" format="DD.MM.YYYY" placeholder="" :disabled="date_disabled" />
                 </div>
             </div>
             <div class="w-3/12 px-1">
-                <label>Ders</label>
+                <label class="text-black">Ders</label>
                 <select class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="lesson" @change="lesson_change()" :disabled="lesson_disabled">
                     <option v-for="subject in subjects" :value="setTimetableValue(subject)">
                         {{ subject.lesson.name }}
@@ -25,18 +25,18 @@
                 </select>
             </div>
             <div class="w-3/12 px-1">
-                <label>Mulgallym</label>
+                <label class="text-black">Mulgallym</label>
                 <input type="text" class="mt-2 block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="teacher" disabled />
             </div>
             <div class="w-2/12 px-1 text-right pt-6">
                 <button @click="saveJournal" class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Tamamla</button>
             </div>
             <div class="w-1/2 px-1 pt-2">
-                <label>Tema</label>
+                <label class="text-black">Tema</label>
                 <input type="text" class="mt-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="topic">
             </div>
             <div class="w-1/2 px-1 pt-2">
-                <label>Öý işi</label>
+                <label class="text-black">Öý işi</label>
                 <input type="text" class="mt-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" v-model="homework">
             </div>
         </div>

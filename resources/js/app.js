@@ -12,7 +12,7 @@ Vue.use(VModal)
 Vue.use(ToggleButton)
 Vue.component('vue-multiselect', window.VueMultiselect.default)
 Vue.component('timetable-day', require('./components/TimetableDay.vue').default)
-Vue.component('journal', () => import('./components/Journal.vue'))
+Vue.component('journal', require('./components/Journal.vue').default)
 
 const app = new Vue({
     el: '#app',
