@@ -1,8 +1,13 @@
 <template>
     <div class="p-5 flex flex-wrap">
-        <div class="w-full mb-5">
-            <label>Gatnaşyk: </label>
-            <toggle-button v-model="attendance" :labels="{checked: 'Bar', unchecked: 'Ýok'}" :width="70" :height="30" :font-size="14" />
+        <div class="w-full mb-5 flex">
+            <div class="w-1/2">
+                <label>Gatnaşyk: </label>
+                <toggle-button v-model="attendance" :labels="{checked: 'Bar', unchecked: 'Ýok'}" :width="70" :height="30" :font-size="14" />
+            </div>
+            <div class="w-1/2 text-right">
+                <button @click="setClear" class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded h-full">Arassala</button>
+            </div>
         </div>
 
         <div class="w-full" v-if="attendance">
@@ -42,6 +47,9 @@
                 let classic = this.attendance_reason == 'allowed' ? 'GM. Rugsatly' : 'GM. Rugsatsyz';
                 
                 this.setMark(classic);
+            },
+            setClear() {
+                this.setMark('');
             },
             setMark(mark) {
                 Event.fire_me('journal-mark', {mark: mark, student: this.student});

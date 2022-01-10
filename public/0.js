@@ -221,12 +221,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 13:
                 response = _context2.sent;
+                console.log(response.data);
 
                 if (response.data.success == 'true') {
                   sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Üstünlikli ýerine ýetirildi.', '', 'success');
                 }
 
-              case 15:
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -298,15 +299,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return false;
       }
 
-      var result = true;
-
-      for (var i = 0; i < this.student_models.length; i++) {
-        if (!this.student_models[i].mark) {
-          result = false;
-        }
-      }
-
-      return result;
+      return true;
     }
   },
   mounted: function mounted() {
@@ -365,6 +358,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['student'],
   data: function data() {
@@ -377,6 +375,9 @@ __webpack_require__.r(__webpack_exports__);
     setAbsent: function setAbsent() {
       var classic = this.attendance_reason == 'allowed' ? 'GM. Rugsatly' : 'GM. Rugsatsyz';
       this.setMark(classic);
+    },
+    setClear: function setClear() {
+      this.setMark('');
     },
     setMark: function setMark(mark) {
       Event.fire_me('journal-mark', {
@@ -752,30 +753,44 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-5 flex flex-wrap" }, [
-    _c(
-      "div",
-      { staticClass: "w-full mb-5" },
-      [
-        _c("label", [_vm._v("Gatnaşyk: ")]),
-        _vm._v(" "),
-        _c("toggle-button", {
-          attrs: {
-            labels: { checked: "Bar", unchecked: "Ýok" },
-            width: 70,
-            height: 30,
-            "font-size": 14,
-          },
-          model: {
-            value: _vm.attendance,
-            callback: function ($$v) {
-              _vm.attendance = $$v
+    _c("div", { staticClass: "w-full mb-5 flex" }, [
+      _c(
+        "div",
+        { staticClass: "w-1/2" },
+        [
+          _c("label", [_vm._v("Gatnaşyk: ")]),
+          _vm._v(" "),
+          _c("toggle-button", {
+            attrs: {
+              labels: { checked: "Bar", unchecked: "Ýok" },
+              width: 70,
+              height: 30,
+              "font-size": 14,
             },
-            expression: "attendance",
+            model: {
+              value: _vm.attendance,
+              callback: function ($$v) {
+                _vm.attendance = $$v
+              },
+              expression: "attendance",
+            },
+          }),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-1/2 text-right" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded h-full",
+            on: { click: _vm.setClear },
           },
-        }),
-      ],
-      1
-    ),
+          [_vm._v("Arassala")]
+        ),
+      ]),
+    ]),
     _vm._v(" "),
     _vm.attendance
       ? _c("div", { staticClass: "w-full" }, [

@@ -148,7 +148,7 @@
                 formData.append('students', JSON.stringify(this.student_models));
 
                 let response = await axios.post(this.journalsSetEndpoint, formData);
-                
+                console.log(response.data);
                 if (response.data.success == 'true') {
                     Swal.fire('Üstünlikli ýerine ýetirildi.', '', 'success');
                 }
@@ -195,14 +195,7 @@
                     return false;
                 }
 
-                let result = true;
-                for (let i = 0; i < this.student_models.length; i++) {
-                    if (! this.student_models[i].mark) {
-                        result = false;
-                    }
-                }
-
-                return result;
+                return true;
             }
         },
         mounted() {
