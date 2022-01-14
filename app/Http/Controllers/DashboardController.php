@@ -30,22 +30,29 @@ class DashboardController extends Controller
 
         $timetables = Timetable::where('semester', $request->semester)->get();
 
-        $teacher_lessons = [];
+        $teacher_lessons = collect();
+        $lessons = collect();
+
+        // return json_decode($timetables[2]['data']);
         foreach ($timetables as $timetable) {
             $day_data = json_decode($timetable->data);
-            
+
             foreach ($day_data as $data) {
-                if ($data->lesson->id == $teacher->id) {
-                    $teacher_lessons[] = [
+                if ($data->teacher->id == $teacher->id) {
+                    $lessons->push($data->lesson);
+
+                    $teacher_lessons->push([
                         'day' => $timetable->dayToTurkmen(),
                         'grade_id' => $timetable->grade_id,
                         'order' => $data->order,
                         'room' => $data->room,
-                        'lesson' => $data->lesson->name
-                    ];
+                        'lesson' => $data->lesson
+                    ]);
                 }
             }
         }
+
+        return [$lessons, $teacher_lessons];
 
         return view('dashboard.teachers.subjects-show', compact('teacher_lessons', 'teacher', 'user'));
     }
