@@ -19,3 +19,6 @@ sudo chown -R www-data:www-data /var/www/school/public
 sudo chmod 755 /var/www
 sudo chmod -R 755 /var/www/school/bootstrap/cache
 sudo chmod -R 755 /var/www/school/storage
+
+*Web channels*
+

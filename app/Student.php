@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    public $excludeLogging = true;
+
     protected $fillable = [
         'user_id',
         'parent_id',

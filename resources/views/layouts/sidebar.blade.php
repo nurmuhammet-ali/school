@@ -73,6 +73,11 @@
                         <i class='bx bxs-user-detail nav__icon' ></i>
                         <span class="nav__name">Rollar we <br> mümkinçilkleri</span>
                     </a>
+
+                    <a href="/admin/user-activity" class="nav__link">
+                        <i class='bx bxl-slack-old nav__icon' ></i>
+                        <span class="nav__name">Aktiwlik</span>
+                    </a>
                 </div>
                 @endrole
             </div>
