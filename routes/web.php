@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth','role:mugallym']], function () {
 
     Route::get('/teachers/subjects', 'DashboardController@teacher_subjects')->name('teacher.subjects');
     Route::get('/teachers/subjects/show', 'DashboardController@teacher_subjects_show')->name('teacher.subjects.show');
-    // Route::get('/teachers/journals/{grade}', 'JournalController@grade')->name('teacher.journals.grade');
+    Route::get('/teachers/journals/{grade}', 'JournalController@grade')->name('teacher.journals.grade');
 });
 
 Route::group(['middleware' => ['auth','role:ene_ata']], function () {

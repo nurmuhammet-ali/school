@@ -52,8 +52,6 @@ class DashboardController extends Controller
             }
         }
 
-        return [$lessons, $teacher_lessons];
-
         return view('dashboard.teachers.subjects-show', compact('teacher_lessons', 'teacher', 'user'));
     }
 
