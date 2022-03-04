@@ -1,3 +1,5 @@
+import Echo from "laravel-echo"
+
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
@@ -25,3 +27,13 @@ Event.fire_me = (name, argument) => {
 Event.listen_me = (name, callback) => {
     document.addEventListener(name, callback);
 }
+
+window.Pusher = require('pusher-js')
+window.Echo = new Echo({
+  broadcaster: 'pusher',
+  key: 'hero_is_coming',
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  forceTLS: false,
+  disableStats: true
+})

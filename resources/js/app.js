@@ -5,6 +5,7 @@ import VModal from 'vue-js-modal'
 import ToggleButton from 'vue-js-toggle-button'
 import Inputmask from "inputmask"
 import Swal from 'sweetalert2'
+import Echo from "laravel-echo"
 
 window.Vue = require('vue')
 

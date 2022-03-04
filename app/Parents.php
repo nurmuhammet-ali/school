@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parents extends Model
 {
+    public $excludeLogging = true;
+    
     protected $table = 'parents';
 
     protected $fillable = [
