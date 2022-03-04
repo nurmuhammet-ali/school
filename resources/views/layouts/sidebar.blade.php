@@ -15,6 +15,11 @@
                         <span class="nav__name">Baş sahypa</span>
                     </a>
 
+                    <a href="/chatify" class="nav__link active" target="_blank">
+                        <i class='bx bx-chat nav__icon'></i>
+                        <span class="nav__name">Çatlaşmak</span>
+                    </a>
+
                     @role('mugallym')
                         <a href="{{ route('teacher.subjects') }}" class="nav__link active">
                             <i class='bx bx-grid nav__icon'></i>
