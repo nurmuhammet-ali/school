@@ -52,5 +52,9 @@ GRANT ALL PRIVILEGES ON *.* TO 'school_user'@'localhost' WITH GRANT OPTION;
 ```
 
 > To setup chatting functionality, setup pusher.js follow https://chatify.munafio.com/installation docs.
+> Database migration
+```bash
+php artisan migrate --seed
+```
 
 # That's it, get things done.
