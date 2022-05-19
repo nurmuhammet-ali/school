@@ -1,6 +1,8 @@
 # School management for turkmen schools
 #### Originally cloned from https://github.com/sanz/laravel-school-management-system, but improved and changed for turkmen education systems.
 
+> It was a private repo, and app is used by the real school, but now I'm making it public for anyone wishing to benefit from it. 
+
 #### Functionalities
 - Lessons
 - Classess
