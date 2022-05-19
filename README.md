@@ -4,11 +4,11 @@
 #### Functionalities
 - Lessons
 - Classess
-- Lesssons
+- Users Management
 - Timetables,
 - Journals (based on timetable)
 -  Attendance
-- Roles (default: admin, teacher, student, parent)
+- Roles Management (default: admin, teacher, student, parent)
 - Chatting
 - Monotiring (logging, resource creation, etc...)
 
