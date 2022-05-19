@@ -1,24 +1,54 @@
-```php
-->whereJsonContains('data', ['teacher->id' => 2])
-->whereRaw('JSON_CONTAINS(data->"$[*].teacher.id", "2")')
-->get();
-whereRaw("JSON_CONTAINS(user_id, '[3]' )")->get();
+# School management for turkmen schools
+#### Originally cloned from https://github.com/sanz/laravel-school-management-system, but improved and changed for turkmen education systems.
+
+#### Functionalities
+- Lessons
+- Classess
+- Lesssons
+- Timetables,
+- Journals (based on timetable)
+-  Attendance
+- Roles (default: admin, teacher, student, parent)
+- Chatting
+- Monotiring (logging, resource creation, etc...)
+
+## Installation
+```bash 
+# Install brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install php and mysql (optionally sqlite or psql)
+brew install php@7.4
+brew install mysql
+
+git clone https://github.com/nurmuhammet-ali/school.git
+cd school
+cp .env.example .env
+composer install
+php artisan key:generate
+
+vim .env
+DB_DATABASE_FOR_TRACKER=try_tracker
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=school_management_system
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-5BHA(J$L:m'9(F/)
-
+> Setup database (example below)
 ```sql
-CREATE USER 'nurmuhammet'@'%' IDENTIFIED BY '=e<Dp@[Z+N?nL9m~';
+# Create database
+create database school_management_system;
+
+# Create user
+CREATE USER 'school_user'@'%' IDENTIFIED BY 'strong_unbreakable_password';
 GRANT ALL PRIVILEGES ON *.* TO 'nurmuhammet'@'%' WITH GRANT OPTION;
-CREATE USER 'nurmuhammet'@'localhost' IDENTIFIED BY '=e<Dp@[Z+N?nL9m~';
+CREATE USER 'nurmuhammet'@'localhost' IDENTIFIED BY 'strong_unbreakable_password';
 GRANT ALL PRIVILEGES ON *.* TO 'nurmuhammet'@'localhost' WITH GRANT OPTION;
 ```
 
-apt install php7.4-mbstring php7.4-xml php7.4-bcmath
-sudo chown -R www-data:www-data /var/www/school/public
-sudo chmod 755 /var/www
-sudo chmod -R 755 /var/www/school/bootstrap/cache
-sudo chmod -R 755 /var/www/school/storage
+> To setup chatting functionality, setup pusher.js follow https://chatify.munafio.com/installation docs.
 
-*Web channels*
-
+# That's it, get things done.
