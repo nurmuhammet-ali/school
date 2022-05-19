@@ -46,7 +46,7 @@ create database school_management_system;
 
 # Create user
 CREATE USER 'school_user'@'%' IDENTIFIED BY 'strong_unbreakable_password';
-GRANT ALL PRIVILEGES ON *.* TO 'nurmuhammet'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'school_user'@'%' WITH GRANT OPTION;
 CREATE USER 'school_user'@'localhost' IDENTIFIED BY 'strong_unbreakable_password';
 GRANT ALL PRIVILEGES ON *.* TO 'school_user'@'localhost' WITH GRANT OPTION;
 ```
