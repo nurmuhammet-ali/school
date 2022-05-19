@@ -45,8 +45,8 @@ create database school_management_system;
 # Create user
 CREATE USER 'school_user'@'%' IDENTIFIED BY 'strong_unbreakable_password';
 GRANT ALL PRIVILEGES ON *.* TO 'nurmuhammet'@'%' WITH GRANT OPTION;
-CREATE USER 'nurmuhammet'@'localhost' IDENTIFIED BY 'strong_unbreakable_password';
-GRANT ALL PRIVILEGES ON *.* TO 'nurmuhammet'@'localhost' WITH GRANT OPTION;
+CREATE USER 'school_user'@'localhost' IDENTIFIED BY 'strong_unbreakable_password';
+GRANT ALL PRIVILEGES ON *.* TO 'school_user'@'localhost' WITH GRANT OPTION;
 ```
 
 > To setup chatting functionality, setup pusher.js follow https://chatify.munafio.com/installation docs.
