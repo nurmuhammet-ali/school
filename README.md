@@ -57,4 +57,4 @@ GRANT ALL PRIVILEGES ON *.* TO 'school_user'@'localhost' WITH GRANT OPTION;
 php artisan migrate --seed
 ```
 
-# That's it, get things done.
+# That's it, :)
