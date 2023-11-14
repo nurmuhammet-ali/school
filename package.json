@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@mathieustan/vue-datepicker": "^0.2.11",
-    "axios": "^0.24.0",
+    "axios": "^1.6.0",
     "inputmask": "^5.0.7",
     "laravel-mix-purgecss": "^6.0.0",
     "nice-select2": "^2.0.0",
